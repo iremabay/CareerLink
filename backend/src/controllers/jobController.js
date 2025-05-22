@@ -1,0 +1,109 @@
+const { PrismaClient } = require("../generated/prisma");
+const prisma = new PrismaClient();
+
+const createJob = async (req, res) => {
+  const { title, description, companyName, location, salary } = req.body;
+  const user = req.user; // middleware'den gelen kullanıcı
+
+  if (user.role !== "EMPLOYER") {
+    return res.status(403).json({ message: "Sadece işverenler ilan oluşturabilir." });
+  }
+
+  try {
+    const newJob = await prisma.jobPosting.create({
+      data: {
+        title,
+        description,
+        companyName,
+        employerId: user.userId
+      }
+    });
+
+    res.status(201).json(newJob);
+  } catch (error) {
+    console.error("İlan oluşturma hatası:", error);
+    res.status(500).json({ message: "Sunucu hatası" });
+  }
+};
+
+const getAllJobs = async (req, res) => {
+  try {
+    const jobs = await prisma.jobPosting.findMany({
+      orderBy: {
+        createdAt: "desc"
+      },
+      include: {
+        employer: {
+          select: {
+            fullName: true,
+            email: true
+          }
+        }
+      }
+    });
+
+    res.json(jobs);
+  } catch (error) {
+    console.error("İlanları getirirken hata:", error);
+    res.status(500).json({ message: "Sunucu hatası" });
+  }
+};
+
+const updateJob = async (req, res) => {
+  const { id } = req.params;
+  const { title, description, companyName } = req.body;
+  const user = req.user;
+
+  try {
+    const job = await prisma.jobPosting.findUnique({ where: { id: Number(id) } });
+
+    if (!job) {
+      return res.status(404).json({ message: "İlan bulunamadı." });
+    }
+
+    if (job.employerId !== user.userId || user.role !== "EMPLOYER") {
+      return res.status(403).json({ message: "Bu ilana sadece sahibi erişebilir." });
+    }
+
+    const updatedJob = await prisma.jobPosting.update({
+      where: { id: Number(id) },
+      data: { title, description, companyName }
+    });
+
+    res.json(updatedJob);
+  } catch (error) {
+    console.error("İlan güncelleme hatası:", error);
+    res.status(500).json({ message: "Sunucu hatası" });
+  }
+};
+
+const deleteJob = async (req, res) => {
+  const { id } = req.params;
+  const user = req.user;
+
+  try {
+    const job = await prisma.jobPosting.findUnique({ where: { id: Number(id) } });
+
+    if (!job) {
+      return res.status(404).json({ message: "İlan bulunamadı." });
+    }
+
+    if (job.employerId !== user.userId || user.role !== "EMPLOYER") {
+      return res.status(403).json({ message: "Bu ilana sadece sahibi erişebilir." });
+    }
+
+    await prisma.jobPosting.delete({ where: { id: Number(id) } });
+    res.json({ message: "İlan başarıyla silindi." });
+  } catch (error) {
+    console.error("İlan silme hatası:", error);
+    res.status(500).json({ message: "Sunucu hatası" });
+  }
+};
+
+module.exports = {
+  createJob,
+  getAllJobs,
+  updateJob,
+  deleteJob
+};
+
