@@ -79,4 +79,33 @@ const loginUser = async (req, res) => {
   }
 };
 
-module.exports = { registerUser, loginUser };
+const getUserProfile = async (req, res) => {
+  const userId = req.user.userId;
+
+  try {
+    const user = await prisma.user.findUnique({
+      where: { id: userId },
+      select: {
+        id: true,
+        fullName: true,
+        email: true,
+        role: true,
+        createdAt: true
+      }
+    });
+
+    if (!user) {
+      return res.status(404).json({ message: "Kullanıcı bulunamadı." });
+    }
+
+    res.json(user);
+  } catch (error) {
+    console.error("Profil bilgisi alınırken hata:", error);
+    res.status(500).json({ message: "Sunucu hatası" });
+  }
+};
+
+
+
+
+module.exports = { registerUser, loginUser, getUserProfile };
