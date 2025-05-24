@@ -4,9 +4,7 @@ const jwt = require("jsonwebtoken");
 
 const prisma = new PrismaClient();
 
-//
 //  KULLANICI KAYIT (REGISTER)
-//
 const registerUser = async (req, res) => {
   const { fullName, email, password, role } = req.body;
 
@@ -39,29 +37,26 @@ const registerUser = async (req, res) => {
   }
 };
 
-
-//
 // KULLANICI GİRİŞ (LOGIN)
-//
 const loginUser = async (req, res) => {
   const { email, password } = req.body;
 
   try {
-    console.log("🟡 Login isteği geldi:", email);
+    console.log("Login isteği geldi:", email);
 
     const user = await prisma.user.findUnique({ where: { email } });
 
     if (!user) {
-      console.log("🔴 Kullanıcı bulunamadı:", email);
+      console.log("Kullanıcı bulunamadı:", email);
       return res.status(404).json({ message: "Kullanıcı bulunamadı." });
     }
 
-    console.log("📦 Veritabanındaki kullanıcı:", user);
+    console.log("Veritabanındaki kullanıcı:", user);
 
     const isPasswordCorrect = await bcrypt.compare(password, user.password);
 
     if (!isPasswordCorrect) {
-      console.log("🔴 Şifre eşleşmedi");
+      console.log("Şifre eşleşmedi");
       return res.status(400).json({ message: "Hatalı şifre." });
     }
 
@@ -71,14 +66,15 @@ const loginUser = async (req, res) => {
       { expiresIn: "1d" }
     );
 
-    console.log("🟢 Giriş başarılı, token oluşturuldu.");
+    console.log("Giriş başarılı, token oluşturuldu.");
     res.json({ token });
   } catch (error) {
-    console.error("🔥 Giriş hatası:", error);
+    console.error("Giriş hatası:", error);
     res.status(500).json({ message: "Sunucu hatası" });
   }
 };
 
+//kullanıcı bilgilerini getirme
 const getUserProfile = async (req, res) => {
   const userId = req.user.userId;
 
@@ -104,8 +100,6 @@ const getUserProfile = async (req, res) => {
     res.status(500).json({ message: "Sunucu hatası" });
   }
 };
-
-
 
 
 module.exports = { registerUser, loginUser, getUserProfile };

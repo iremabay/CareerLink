@@ -2,7 +2,7 @@ const { PrismaClient } = require("../generated/prisma");
 const prisma = new PrismaClient();
 
 const createJob = async (req, res) => {
-  const { title, description, companyName, location, salary } = req.body;
+  const { title, description, companyName} = req.body;
   const user = req.user; // middleware'den gelen kullanıcı
 
   if (user.role !== "EMPLOYER") {
@@ -100,10 +100,36 @@ const deleteJob = async (req, res) => {
   }
 };
 
+const getMyJobs = async (req, res) => {
+  const user = req.user;
+
+  if (user.role !== "EMPLOYER") {
+    return res.status(403).json({ message: "Sadece işverenler kendi ilanlarını görüntüleyebilir." });
+  }
+
+  try {
+    const jobs = await prisma.jobPosting.findMany({
+      where: {
+        employerId: user.userId
+      },
+      orderBy: {
+        createdAt: "desc"
+      }
+    });
+
+    res.json(jobs);
+  } catch (error) {
+    console.error("Kendi ilanlarını getirirken hata:", error);
+    res.status(500).json({ message: "Sunucu hatası" });
+  }
+};
+
+
 module.exports = {
   createJob,
   getAllJobs,
   updateJob,
-  deleteJob
+  deleteJob,
+  getMyJobs
 };
 
