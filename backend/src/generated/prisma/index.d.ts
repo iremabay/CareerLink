@@ -33,6 +33,11 @@ export type Application = $Result.DefaultSelection<Prisma.$ApplicationPayload>
  * 
  */
 export type SavedJob = $Result.DefaultSelection<Prisma.$SavedJobPayload>
+/**
+ * Model CV
+ * 
+ */
+export type CV = $Result.DefaultSelection<Prisma.$CVPayload>
 
 /**
  * ##  Prisma Client ʲˢ
@@ -198,6 +203,16 @@ export class PrismaClient<
     * ```
     */
   get savedJob(): Prisma.SavedJobDelegate<ExtArgs, ClientOptions>;
+
+  /**
+   * `prisma.cV`: Exposes CRUD operations for the **CV** model.
+    * Example usage:
+    * ```ts
+    * // Fetch zero or more CVS
+    * const cVS = await prisma.cV.findMany()
+    * ```
+    */
+  get cV(): Prisma.CVDelegate<ExtArgs, ClientOptions>;
 }
 
 export namespace Prisma {
@@ -641,7 +656,8 @@ export namespace Prisma {
     User: 'User',
     JobPosting: 'JobPosting',
     Application: 'Application',
-    SavedJob: 'SavedJob'
+    SavedJob: 'SavedJob',
+    CV: 'CV'
   };
 
   export type ModelName = (typeof ModelName)[keyof typeof ModelName]
@@ -660,7 +676,7 @@ export namespace Prisma {
       omit: GlobalOmitOptions
     }
     meta: {
-      modelProps: "user" | "jobPosting" | "application" | "savedJob"
+      modelProps: "user" | "jobPosting" | "application" | "savedJob" | "cV"
       txIsolationLevel: Prisma.TransactionIsolationLevel
     }
     model: {
@@ -960,6 +976,80 @@ export namespace Prisma {
           }
         }
       }
+      CV: {
+        payload: Prisma.$CVPayload<ExtArgs>
+        fields: Prisma.CVFieldRefs
+        operations: {
+          findUnique: {
+            args: Prisma.CVFindUniqueArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$CVPayload> | null
+          }
+          findUniqueOrThrow: {
+            args: Prisma.CVFindUniqueOrThrowArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$CVPayload>
+          }
+          findFirst: {
+            args: Prisma.CVFindFirstArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$CVPayload> | null
+          }
+          findFirstOrThrow: {
+            args: Prisma.CVFindFirstOrThrowArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$CVPayload>
+          }
+          findMany: {
+            args: Prisma.CVFindManyArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$CVPayload>[]
+          }
+          create: {
+            args: Prisma.CVCreateArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$CVPayload>
+          }
+          createMany: {
+            args: Prisma.CVCreateManyArgs<ExtArgs>
+            result: BatchPayload
+          }
+          createManyAndReturn: {
+            args: Prisma.CVCreateManyAndReturnArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$CVPayload>[]
+          }
+          delete: {
+            args: Prisma.CVDeleteArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$CVPayload>
+          }
+          update: {
+            args: Prisma.CVUpdateArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$CVPayload>
+          }
+          deleteMany: {
+            args: Prisma.CVDeleteManyArgs<ExtArgs>
+            result: BatchPayload
+          }
+          updateMany: {
+            args: Prisma.CVUpdateManyArgs<ExtArgs>
+            result: BatchPayload
+          }
+          updateManyAndReturn: {
+            args: Prisma.CVUpdateManyAndReturnArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$CVPayload>[]
+          }
+          upsert: {
+            args: Prisma.CVUpsertArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$CVPayload>
+          }
+          aggregate: {
+            args: Prisma.CVAggregateArgs<ExtArgs>
+            result: $Utils.Optional<AggregateCV>
+          }
+          groupBy: {
+            args: Prisma.CVGroupByArgs<ExtArgs>
+            result: $Utils.Optional<CVGroupByOutputType>[]
+          }
+          count: {
+            args: Prisma.CVCountArgs<ExtArgs>
+            result: $Utils.Optional<CVCountAggregateOutputType> | number
+          }
+        }
+      }
     }
   } & {
     other: {
@@ -1048,6 +1138,7 @@ export namespace Prisma {
     jobPosting?: JobPostingOmit
     application?: ApplicationOmit
     savedJob?: SavedJobOmit
+    cV?: CVOmit
   }
 
   /* Types for Logging */
@@ -1439,6 +1530,7 @@ export namespace Prisma {
     jobPostings?: boolean | User$jobPostingsArgs<ExtArgs>
     applications?: boolean | User$applicationsArgs<ExtArgs>
     savedJobs?: boolean | User$savedJobsArgs<ExtArgs>
+    cv?: boolean | User$cvArgs<ExtArgs>
     _count?: boolean | UserCountOutputTypeDefaultArgs<ExtArgs>
   }, ExtArgs["result"]["user"]>
 
@@ -1474,6 +1566,7 @@ export namespace Prisma {
     jobPostings?: boolean | User$jobPostingsArgs<ExtArgs>
     applications?: boolean | User$applicationsArgs<ExtArgs>
     savedJobs?: boolean | User$savedJobsArgs<ExtArgs>
+    cv?: boolean | User$cvArgs<ExtArgs>
     _count?: boolean | UserCountOutputTypeDefaultArgs<ExtArgs>
   }
   export type UserIncludeCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {}
@@ -1485,6 +1578,7 @@ export namespace Prisma {
       jobPostings: Prisma.$JobPostingPayload<ExtArgs>[]
       applications: Prisma.$ApplicationPayload<ExtArgs>[]
       savedJobs: Prisma.$SavedJobPayload<ExtArgs>[]
+      cv: Prisma.$CVPayload<ExtArgs> | null
     }
     scalars: $Extensions.GetPayloadResult<{
       id: number
@@ -1890,6 +1984,7 @@ export namespace Prisma {
     jobPostings<T extends User$jobPostingsArgs<ExtArgs> = {}>(args?: Subset<T, User$jobPostingsArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$JobPostingPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
     applications<T extends User$applicationsArgs<ExtArgs> = {}>(args?: Subset<T, User$applicationsArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$ApplicationPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
     savedJobs<T extends User$savedJobsArgs<ExtArgs> = {}>(args?: Subset<T, User$savedJobsArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$SavedJobPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
+    cv<T extends User$cvArgs<ExtArgs> = {}>(args?: Subset<T, User$cvArgs<ExtArgs>>): Prisma__CVClient<$Result.GetResult<Prisma.$CVPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
     /**
      * Attaches callbacks for the resolution and/or rejection of the Promise.
      * @param onfulfilled The callback to execute when the Promise is resolved.
@@ -2385,6 +2480,25 @@ export namespace Prisma {
   }
 
   /**
+   * User.cv
+   */
+  export type User$cvArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the CV
+     */
+    select?: CVSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the CV
+     */
+    omit?: CVOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: CVInclude<ExtArgs> | null
+    where?: CVWhereInput
+  }
+
+  /**
    * User without action
    */
   export type UserDefaultArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
@@ -2431,6 +2545,7 @@ export namespace Prisma {
     description: string | null
     companyName: string | null
     createdAt: Date | null
+    processed_text: string | null
     employerId: number | null
   }
 
@@ -2440,6 +2555,7 @@ export namespace Prisma {
     description: string | null
     companyName: string | null
     createdAt: Date | null
+    processed_text: string | null
     employerId: number | null
   }
 
@@ -2449,6 +2565,7 @@ export namespace Prisma {
     description: number
     companyName: number
     createdAt: number
+    processed_text: number
     employerId: number
     _all: number
   }
@@ -2470,6 +2587,7 @@ export namespace Prisma {
     description?: true
     companyName?: true
     createdAt?: true
+    processed_text?: true
     employerId?: true
   }
 
@@ -2479,6 +2597,7 @@ export namespace Prisma {
     description?: true
     companyName?: true
     createdAt?: true
+    processed_text?: true
     employerId?: true
   }
 
@@ -2488,6 +2607,7 @@ export namespace Prisma {
     description?: true
     companyName?: true
     createdAt?: true
+    processed_text?: true
     employerId?: true
     _all?: true
   }
@@ -2584,6 +2704,7 @@ export namespace Prisma {
     description: string
     companyName: string
     createdAt: Date
+    processed_text: string | null
     employerId: number
     _count: JobPostingCountAggregateOutputType | null
     _avg: JobPostingAvgAggregateOutputType | null
@@ -2612,6 +2733,7 @@ export namespace Prisma {
     description?: boolean
     companyName?: boolean
     createdAt?: boolean
+    processed_text?: boolean
     employerId?: boolean
     employer?: boolean | UserDefaultArgs<ExtArgs>
     applications?: boolean | JobPosting$applicationsArgs<ExtArgs>
@@ -2625,6 +2747,7 @@ export namespace Prisma {
     description?: boolean
     companyName?: boolean
     createdAt?: boolean
+    processed_text?: boolean
     employerId?: boolean
     employer?: boolean | UserDefaultArgs<ExtArgs>
   }, ExtArgs["result"]["jobPosting"]>
@@ -2635,6 +2758,7 @@ export namespace Prisma {
     description?: boolean
     companyName?: boolean
     createdAt?: boolean
+    processed_text?: boolean
     employerId?: boolean
     employer?: boolean | UserDefaultArgs<ExtArgs>
   }, ExtArgs["result"]["jobPosting"]>
@@ -2645,10 +2769,11 @@ export namespace Prisma {
     description?: boolean
     companyName?: boolean
     createdAt?: boolean
+    processed_text?: boolean
     employerId?: boolean
   }
 
-  export type JobPostingOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "title" | "description" | "companyName" | "createdAt" | "employerId", ExtArgs["result"]["jobPosting"]>
+  export type JobPostingOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "title" | "description" | "companyName" | "createdAt" | "processed_text" | "employerId", ExtArgs["result"]["jobPosting"]>
   export type JobPostingInclude<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     employer?: boolean | UserDefaultArgs<ExtArgs>
     applications?: boolean | JobPosting$applicationsArgs<ExtArgs>
@@ -2675,6 +2800,7 @@ export namespace Prisma {
       description: string
       companyName: string
       createdAt: Date
+      processed_text: string | null
       employerId: number
     }, ExtArgs["result"]["jobPosting"]>
     composites: {}
@@ -3107,6 +3233,7 @@ export namespace Prisma {
     readonly description: FieldRef<"JobPosting", 'String'>
     readonly companyName: FieldRef<"JobPosting", 'String'>
     readonly createdAt: FieldRef<"JobPosting", 'DateTime'>
+    readonly processed_text: FieldRef<"JobPosting", 'String'>
     readonly employerId: FieldRef<"JobPosting", 'Int'>
   }
     
@@ -5761,6 +5888,1102 @@ export namespace Prisma {
 
 
   /**
+   * Model CV
+   */
+
+  export type AggregateCV = {
+    _count: CVCountAggregateOutputType | null
+    _avg: CVAvgAggregateOutputType | null
+    _sum: CVSumAggregateOutputType | null
+    _min: CVMinAggregateOutputType | null
+    _max: CVMaxAggregateOutputType | null
+  }
+
+  export type CVAvgAggregateOutputType = {
+    id: number | null
+    userId: number | null
+  }
+
+  export type CVSumAggregateOutputType = {
+    id: number | null
+    userId: number | null
+  }
+
+  export type CVMinAggregateOutputType = {
+    id: number | null
+    userId: number | null
+    filePath: string | null
+    text: string | null
+    createdAt: Date | null
+  }
+
+  export type CVMaxAggregateOutputType = {
+    id: number | null
+    userId: number | null
+    filePath: string | null
+    text: string | null
+    createdAt: Date | null
+  }
+
+  export type CVCountAggregateOutputType = {
+    id: number
+    userId: number
+    filePath: number
+    text: number
+    createdAt: number
+    _all: number
+  }
+
+
+  export type CVAvgAggregateInputType = {
+    id?: true
+    userId?: true
+  }
+
+  export type CVSumAggregateInputType = {
+    id?: true
+    userId?: true
+  }
+
+  export type CVMinAggregateInputType = {
+    id?: true
+    userId?: true
+    filePath?: true
+    text?: true
+    createdAt?: true
+  }
+
+  export type CVMaxAggregateInputType = {
+    id?: true
+    userId?: true
+    filePath?: true
+    text?: true
+    createdAt?: true
+  }
+
+  export type CVCountAggregateInputType = {
+    id?: true
+    userId?: true
+    filePath?: true
+    text?: true
+    createdAt?: true
+    _all?: true
+  }
+
+  export type CVAggregateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Filter which CV to aggregate.
+     */
+    where?: CVWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of CVS to fetch.
+     */
+    orderBy?: CVOrderByWithRelationInput | CVOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the start position
+     */
+    cursor?: CVWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` CVS from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` CVS.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Count returned CVS
+    **/
+    _count?: true | CVCountAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to average
+    **/
+    _avg?: CVAvgAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to sum
+    **/
+    _sum?: CVSumAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to find the minimum value
+    **/
+    _min?: CVMinAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to find the maximum value
+    **/
+    _max?: CVMaxAggregateInputType
+  }
+
+  export type GetCVAggregateType<T extends CVAggregateArgs> = {
+        [P in keyof T & keyof AggregateCV]: P extends '_count' | 'count'
+      ? T[P] extends true
+        ? number
+        : GetScalarType<T[P], AggregateCV[P]>
+      : GetScalarType<T[P], AggregateCV[P]>
+  }
+
+
+
+
+  export type CVGroupByArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    where?: CVWhereInput
+    orderBy?: CVOrderByWithAggregationInput | CVOrderByWithAggregationInput[]
+    by: CVScalarFieldEnum[] | CVScalarFieldEnum
+    having?: CVScalarWhereWithAggregatesInput
+    take?: number
+    skip?: number
+    _count?: CVCountAggregateInputType | true
+    _avg?: CVAvgAggregateInputType
+    _sum?: CVSumAggregateInputType
+    _min?: CVMinAggregateInputType
+    _max?: CVMaxAggregateInputType
+  }
+
+  export type CVGroupByOutputType = {
+    id: number
+    userId: number
+    filePath: string
+    text: string
+    createdAt: Date
+    _count: CVCountAggregateOutputType | null
+    _avg: CVAvgAggregateOutputType | null
+    _sum: CVSumAggregateOutputType | null
+    _min: CVMinAggregateOutputType | null
+    _max: CVMaxAggregateOutputType | null
+  }
+
+  type GetCVGroupByPayload<T extends CVGroupByArgs> = Prisma.PrismaPromise<
+    Array<
+      PickEnumerable<CVGroupByOutputType, T['by']> &
+        {
+          [P in ((keyof T) & (keyof CVGroupByOutputType))]: P extends '_count'
+            ? T[P] extends boolean
+              ? number
+              : GetScalarType<T[P], CVGroupByOutputType[P]>
+            : GetScalarType<T[P], CVGroupByOutputType[P]>
+        }
+      >
+    >
+
+
+  export type CVSelect<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
+    id?: boolean
+    userId?: boolean
+    filePath?: boolean
+    text?: boolean
+    createdAt?: boolean
+    user?: boolean | UserDefaultArgs<ExtArgs>
+  }, ExtArgs["result"]["cV"]>
+
+  export type CVSelectCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
+    id?: boolean
+    userId?: boolean
+    filePath?: boolean
+    text?: boolean
+    createdAt?: boolean
+    user?: boolean | UserDefaultArgs<ExtArgs>
+  }, ExtArgs["result"]["cV"]>
+
+  export type CVSelectUpdateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
+    id?: boolean
+    userId?: boolean
+    filePath?: boolean
+    text?: boolean
+    createdAt?: boolean
+    user?: boolean | UserDefaultArgs<ExtArgs>
+  }, ExtArgs["result"]["cV"]>
+
+  export type CVSelectScalar = {
+    id?: boolean
+    userId?: boolean
+    filePath?: boolean
+    text?: boolean
+    createdAt?: boolean
+  }
+
+  export type CVOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "userId" | "filePath" | "text" | "createdAt", ExtArgs["result"]["cV"]>
+  export type CVInclude<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    user?: boolean | UserDefaultArgs<ExtArgs>
+  }
+  export type CVIncludeCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    user?: boolean | UserDefaultArgs<ExtArgs>
+  }
+  export type CVIncludeUpdateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    user?: boolean | UserDefaultArgs<ExtArgs>
+  }
+
+  export type $CVPayload<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    name: "CV"
+    objects: {
+      user: Prisma.$UserPayload<ExtArgs>
+    }
+    scalars: $Extensions.GetPayloadResult<{
+      id: number
+      userId: number
+      filePath: string
+      text: string
+      createdAt: Date
+    }, ExtArgs["result"]["cV"]>
+    composites: {}
+  }
+
+  type CVGetPayload<S extends boolean | null | undefined | CVDefaultArgs> = $Result.GetResult<Prisma.$CVPayload, S>
+
+  type CVCountArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> =
+    Omit<CVFindManyArgs, 'select' | 'include' | 'distinct' | 'omit'> & {
+      select?: CVCountAggregateInputType | true
+    }
+
+  export interface CVDelegate<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs, GlobalOmitOptions = {}> {
+    [K: symbol]: { types: Prisma.TypeMap<ExtArgs>['model']['CV'], meta: { name: 'CV' } }
+    /**
+     * Find zero or one CV that matches the filter.
+     * @param {CVFindUniqueArgs} args - Arguments to find a CV
+     * @example
+     * // Get one CV
+     * const cV = await prisma.cV.findUnique({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findUnique<T extends CVFindUniqueArgs>(args: SelectSubset<T, CVFindUniqueArgs<ExtArgs>>): Prisma__CVClient<$Result.GetResult<Prisma.$CVPayload<ExtArgs>, T, "findUnique", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Find one CV that matches the filter or throw an error with `error.code='P2025'`
+     * if no matches were found.
+     * @param {CVFindUniqueOrThrowArgs} args - Arguments to find a CV
+     * @example
+     * // Get one CV
+     * const cV = await prisma.cV.findUniqueOrThrow({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findUniqueOrThrow<T extends CVFindUniqueOrThrowArgs>(args: SelectSubset<T, CVFindUniqueOrThrowArgs<ExtArgs>>): Prisma__CVClient<$Result.GetResult<Prisma.$CVPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Find the first CV that matches the filter.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {CVFindFirstArgs} args - Arguments to find a CV
+     * @example
+     * // Get one CV
+     * const cV = await prisma.cV.findFirst({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findFirst<T extends CVFindFirstArgs>(args?: SelectSubset<T, CVFindFirstArgs<ExtArgs>>): Prisma__CVClient<$Result.GetResult<Prisma.$CVPayload<ExtArgs>, T, "findFirst", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Find the first CV that matches the filter or
+     * throw `PrismaKnownClientError` with `P2025` code if no matches were found.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {CVFindFirstOrThrowArgs} args - Arguments to find a CV
+     * @example
+     * // Get one CV
+     * const cV = await prisma.cV.findFirstOrThrow({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findFirstOrThrow<T extends CVFindFirstOrThrowArgs>(args?: SelectSubset<T, CVFindFirstOrThrowArgs<ExtArgs>>): Prisma__CVClient<$Result.GetResult<Prisma.$CVPayload<ExtArgs>, T, "findFirstOrThrow", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Find zero or more CVS that matches the filter.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {CVFindManyArgs} args - Arguments to filter and select certain fields only.
+     * @example
+     * // Get all CVS
+     * const cVS = await prisma.cV.findMany()
+     * 
+     * // Get first 10 CVS
+     * const cVS = await prisma.cV.findMany({ take: 10 })
+     * 
+     * // Only select the `id`
+     * const cVWithIdOnly = await prisma.cV.findMany({ select: { id: true } })
+     * 
+     */
+    findMany<T extends CVFindManyArgs>(args?: SelectSubset<T, CVFindManyArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$CVPayload<ExtArgs>, T, "findMany", GlobalOmitOptions>>
+
+    /**
+     * Create a CV.
+     * @param {CVCreateArgs} args - Arguments to create a CV.
+     * @example
+     * // Create one CV
+     * const CV = await prisma.cV.create({
+     *   data: {
+     *     // ... data to create a CV
+     *   }
+     * })
+     * 
+     */
+    create<T extends CVCreateArgs>(args: SelectSubset<T, CVCreateArgs<ExtArgs>>): Prisma__CVClient<$Result.GetResult<Prisma.$CVPayload<ExtArgs>, T, "create", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Create many CVS.
+     * @param {CVCreateManyArgs} args - Arguments to create many CVS.
+     * @example
+     * // Create many CVS
+     * const cV = await prisma.cV.createMany({
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     *     
+     */
+    createMany<T extends CVCreateManyArgs>(args?: SelectSubset<T, CVCreateManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Create many CVS and returns the data saved in the database.
+     * @param {CVCreateManyAndReturnArgs} args - Arguments to create many CVS.
+     * @example
+     * // Create many CVS
+     * const cV = await prisma.cV.createManyAndReturn({
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * 
+     * // Create many CVS and only return the `id`
+     * const cVWithIdOnly = await prisma.cV.createManyAndReturn({
+     *   select: { id: true },
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * 
+     */
+    createManyAndReturn<T extends CVCreateManyAndReturnArgs>(args?: SelectSubset<T, CVCreateManyAndReturnArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$CVPayload<ExtArgs>, T, "createManyAndReturn", GlobalOmitOptions>>
+
+    /**
+     * Delete a CV.
+     * @param {CVDeleteArgs} args - Arguments to delete one CV.
+     * @example
+     * // Delete one CV
+     * const CV = await prisma.cV.delete({
+     *   where: {
+     *     // ... filter to delete one CV
+     *   }
+     * })
+     * 
+     */
+    delete<T extends CVDeleteArgs>(args: SelectSubset<T, CVDeleteArgs<ExtArgs>>): Prisma__CVClient<$Result.GetResult<Prisma.$CVPayload<ExtArgs>, T, "delete", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Update one CV.
+     * @param {CVUpdateArgs} args - Arguments to update one CV.
+     * @example
+     * // Update one CV
+     * const cV = await prisma.cV.update({
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: {
+     *     // ... provide data here
+     *   }
+     * })
+     * 
+     */
+    update<T extends CVUpdateArgs>(args: SelectSubset<T, CVUpdateArgs<ExtArgs>>): Prisma__CVClient<$Result.GetResult<Prisma.$CVPayload<ExtArgs>, T, "update", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Delete zero or more CVS.
+     * @param {CVDeleteManyArgs} args - Arguments to filter CVS to delete.
+     * @example
+     * // Delete a few CVS
+     * const { count } = await prisma.cV.deleteMany({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     * 
+     */
+    deleteMany<T extends CVDeleteManyArgs>(args?: SelectSubset<T, CVDeleteManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Update zero or more CVS.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {CVUpdateManyArgs} args - Arguments to update one or more rows.
+     * @example
+     * // Update many CVS
+     * const cV = await prisma.cV.updateMany({
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: {
+     *     // ... provide data here
+     *   }
+     * })
+     * 
+     */
+    updateMany<T extends CVUpdateManyArgs>(args: SelectSubset<T, CVUpdateManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Update zero or more CVS and returns the data updated in the database.
+     * @param {CVUpdateManyAndReturnArgs} args - Arguments to update many CVS.
+     * @example
+     * // Update many CVS
+     * const cV = await prisma.cV.updateManyAndReturn({
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * 
+     * // Update zero or more CVS and only return the `id`
+     * const cVWithIdOnly = await prisma.cV.updateManyAndReturn({
+     *   select: { id: true },
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * 
+     */
+    updateManyAndReturn<T extends CVUpdateManyAndReturnArgs>(args: SelectSubset<T, CVUpdateManyAndReturnArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$CVPayload<ExtArgs>, T, "updateManyAndReturn", GlobalOmitOptions>>
+
+    /**
+     * Create or update one CV.
+     * @param {CVUpsertArgs} args - Arguments to update or create a CV.
+     * @example
+     * // Update or create a CV
+     * const cV = await prisma.cV.upsert({
+     *   create: {
+     *     // ... data to create a CV
+     *   },
+     *   update: {
+     *     // ... in case it already exists, update
+     *   },
+     *   where: {
+     *     // ... the filter for the CV we want to update
+     *   }
+     * })
+     */
+    upsert<T extends CVUpsertArgs>(args: SelectSubset<T, CVUpsertArgs<ExtArgs>>): Prisma__CVClient<$Result.GetResult<Prisma.$CVPayload<ExtArgs>, T, "upsert", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+
+    /**
+     * Count the number of CVS.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {CVCountArgs} args - Arguments to filter CVS to count.
+     * @example
+     * // Count the number of CVS
+     * const count = await prisma.cV.count({
+     *   where: {
+     *     // ... the filter for the CVS we want to count
+     *   }
+     * })
+    **/
+    count<T extends CVCountArgs>(
+      args?: Subset<T, CVCountArgs>,
+    ): Prisma.PrismaPromise<
+      T extends $Utils.Record<'select', any>
+        ? T['select'] extends true
+          ? number
+          : GetScalarType<T['select'], CVCountAggregateOutputType>
+        : number
+    >
+
+    /**
+     * Allows you to perform aggregations operations on a CV.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {CVAggregateArgs} args - Select which aggregations you would like to apply and on what fields.
+     * @example
+     * // Ordered by age ascending
+     * // Where email contains prisma.io
+     * // Limited to the 10 users
+     * const aggregations = await prisma.user.aggregate({
+     *   _avg: {
+     *     age: true,
+     *   },
+     *   where: {
+     *     email: {
+     *       contains: "prisma.io",
+     *     },
+     *   },
+     *   orderBy: {
+     *     age: "asc",
+     *   },
+     *   take: 10,
+     * })
+    **/
+    aggregate<T extends CVAggregateArgs>(args: Subset<T, CVAggregateArgs>): Prisma.PrismaPromise<GetCVAggregateType<T>>
+
+    /**
+     * Group by CV.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {CVGroupByArgs} args - Group by arguments.
+     * @example
+     * // Group by city, order by createdAt, get count
+     * const result = await prisma.user.groupBy({
+     *   by: ['city', 'createdAt'],
+     *   orderBy: {
+     *     createdAt: true
+     *   },
+     *   _count: {
+     *     _all: true
+     *   },
+     * })
+     * 
+    **/
+    groupBy<
+      T extends CVGroupByArgs,
+      HasSelectOrTake extends Or<
+        Extends<'skip', Keys<T>>,
+        Extends<'take', Keys<T>>
+      >,
+      OrderByArg extends True extends HasSelectOrTake
+        ? { orderBy: CVGroupByArgs['orderBy'] }
+        : { orderBy?: CVGroupByArgs['orderBy'] },
+      OrderFields extends ExcludeUnderscoreKeys<Keys<MaybeTupleToUnion<T['orderBy']>>>,
+      ByFields extends MaybeTupleToUnion<T['by']>,
+      ByValid extends Has<ByFields, OrderFields>,
+      HavingFields extends GetHavingFields<T['having']>,
+      HavingValid extends Has<ByFields, HavingFields>,
+      ByEmpty extends T['by'] extends never[] ? True : False,
+      InputErrors extends ByEmpty extends True
+      ? `Error: "by" must not be empty.`
+      : HavingValid extends False
+      ? {
+          [P in HavingFields]: P extends ByFields
+            ? never
+            : P extends string
+            ? `Error: Field "${P}" used in "having" needs to be provided in "by".`
+            : [
+                Error,
+                'Field ',
+                P,
+                ` in "having" needs to be provided in "by"`,
+              ]
+        }[HavingFields]
+      : 'take' extends Keys<T>
+      ? 'orderBy' extends Keys<T>
+        ? ByValid extends True
+          ? {}
+          : {
+              [P in OrderFields]: P extends ByFields
+                ? never
+                : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+            }[OrderFields]
+        : 'Error: If you provide "take", you also need to provide "orderBy"'
+      : 'skip' extends Keys<T>
+      ? 'orderBy' extends Keys<T>
+        ? ByValid extends True
+          ? {}
+          : {
+              [P in OrderFields]: P extends ByFields
+                ? never
+                : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+            }[OrderFields]
+        : 'Error: If you provide "skip", you also need to provide "orderBy"'
+      : ByValid extends True
+      ? {}
+      : {
+          [P in OrderFields]: P extends ByFields
+            ? never
+            : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+        }[OrderFields]
+    >(args: SubsetIntersection<T, CVGroupByArgs, OrderByArg> & InputErrors): {} extends InputErrors ? GetCVGroupByPayload<T> : Prisma.PrismaPromise<InputErrors>
+  /**
+   * Fields of the CV model
+   */
+  readonly fields: CVFieldRefs;
+  }
+
+  /**
+   * The delegate class that acts as a "Promise-like" for CV.
+   * Why is this prefixed with `Prisma__`?
+   * Because we want to prevent naming conflicts as mentioned in
+   * https://github.com/prisma/prisma-client-js/issues/707
+   */
+  export interface Prisma__CVClient<T, Null = never, ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs, GlobalOmitOptions = {}> extends Prisma.PrismaPromise<T> {
+    readonly [Symbol.toStringTag]: "PrismaPromise"
+    user<T extends UserDefaultArgs<ExtArgs> = {}>(args?: Subset<T, UserDefaultArgs<ExtArgs>>): Prisma__UserClient<$Result.GetResult<Prisma.$UserPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | Null, Null, ExtArgs, GlobalOmitOptions>
+    /**
+     * Attaches callbacks for the resolution and/or rejection of the Promise.
+     * @param onfulfilled The callback to execute when the Promise is resolved.
+     * @param onrejected The callback to execute when the Promise is rejected.
+     * @returns A Promise for the completion of which ever callback is executed.
+     */
+    then<TResult1 = T, TResult2 = never>(onfulfilled?: ((value: T) => TResult1 | PromiseLike<TResult1>) | undefined | null, onrejected?: ((reason: any) => TResult2 | PromiseLike<TResult2>) | undefined | null): $Utils.JsPromise<TResult1 | TResult2>
+    /**
+     * Attaches a callback for only the rejection of the Promise.
+     * @param onrejected The callback to execute when the Promise is rejected.
+     * @returns A Promise for the completion of the callback.
+     */
+    catch<TResult = never>(onrejected?: ((reason: any) => TResult | PromiseLike<TResult>) | undefined | null): $Utils.JsPromise<T | TResult>
+    /**
+     * Attaches a callback that is invoked when the Promise is settled (fulfilled or rejected). The
+     * resolved value cannot be modified from the callback.
+     * @param onfinally The callback to execute when the Promise is settled (fulfilled or rejected).
+     * @returns A Promise for the completion of the callback.
+     */
+    finally(onfinally?: (() => void) | undefined | null): $Utils.JsPromise<T>
+  }
+
+
+
+
+  /**
+   * Fields of the CV model
+   */
+  interface CVFieldRefs {
+    readonly id: FieldRef<"CV", 'Int'>
+    readonly userId: FieldRef<"CV", 'Int'>
+    readonly filePath: FieldRef<"CV", 'String'>
+    readonly text: FieldRef<"CV", 'String'>
+    readonly createdAt: FieldRef<"CV", 'DateTime'>
+  }
+    
+
+  // Custom InputTypes
+  /**
+   * CV findUnique
+   */
+  export type CVFindUniqueArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the CV
+     */
+    select?: CVSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the CV
+     */
+    omit?: CVOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: CVInclude<ExtArgs> | null
+    /**
+     * Filter, which CV to fetch.
+     */
+    where: CVWhereUniqueInput
+  }
+
+  /**
+   * CV findUniqueOrThrow
+   */
+  export type CVFindUniqueOrThrowArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the CV
+     */
+    select?: CVSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the CV
+     */
+    omit?: CVOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: CVInclude<ExtArgs> | null
+    /**
+     * Filter, which CV to fetch.
+     */
+    where: CVWhereUniqueInput
+  }
+
+  /**
+   * CV findFirst
+   */
+  export type CVFindFirstArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the CV
+     */
+    select?: CVSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the CV
+     */
+    omit?: CVOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: CVInclude<ExtArgs> | null
+    /**
+     * Filter, which CV to fetch.
+     */
+    where?: CVWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of CVS to fetch.
+     */
+    orderBy?: CVOrderByWithRelationInput | CVOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for searching for CVS.
+     */
+    cursor?: CVWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` CVS from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` CVS.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
+     * 
+     * Filter by unique combinations of CVS.
+     */
+    distinct?: CVScalarFieldEnum | CVScalarFieldEnum[]
+  }
+
+  /**
+   * CV findFirstOrThrow
+   */
+  export type CVFindFirstOrThrowArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the CV
+     */
+    select?: CVSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the CV
+     */
+    omit?: CVOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: CVInclude<ExtArgs> | null
+    /**
+     * Filter, which CV to fetch.
+     */
+    where?: CVWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of CVS to fetch.
+     */
+    orderBy?: CVOrderByWithRelationInput | CVOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for searching for CVS.
+     */
+    cursor?: CVWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` CVS from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` CVS.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
+     * 
+     * Filter by unique combinations of CVS.
+     */
+    distinct?: CVScalarFieldEnum | CVScalarFieldEnum[]
+  }
+
+  /**
+   * CV findMany
+   */
+  export type CVFindManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the CV
+     */
+    select?: CVSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the CV
+     */
+    omit?: CVOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: CVInclude<ExtArgs> | null
+    /**
+     * Filter, which CVS to fetch.
+     */
+    where?: CVWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of CVS to fetch.
+     */
+    orderBy?: CVOrderByWithRelationInput | CVOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for listing CVS.
+     */
+    cursor?: CVWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` CVS from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` CVS.
+     */
+    skip?: number
+    distinct?: CVScalarFieldEnum | CVScalarFieldEnum[]
+  }
+
+  /**
+   * CV create
+   */
+  export type CVCreateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the CV
+     */
+    select?: CVSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the CV
+     */
+    omit?: CVOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: CVInclude<ExtArgs> | null
+    /**
+     * The data needed to create a CV.
+     */
+    data: XOR<CVCreateInput, CVUncheckedCreateInput>
+  }
+
+  /**
+   * CV createMany
+   */
+  export type CVCreateManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * The data used to create many CVS.
+     */
+    data: CVCreateManyInput | CVCreateManyInput[]
+    skipDuplicates?: boolean
+  }
+
+  /**
+   * CV createManyAndReturn
+   */
+  export type CVCreateManyAndReturnArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the CV
+     */
+    select?: CVSelectCreateManyAndReturn<ExtArgs> | null
+    /**
+     * Omit specific fields from the CV
+     */
+    omit?: CVOmit<ExtArgs> | null
+    /**
+     * The data used to create many CVS.
+     */
+    data: CVCreateManyInput | CVCreateManyInput[]
+    skipDuplicates?: boolean
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: CVIncludeCreateManyAndReturn<ExtArgs> | null
+  }
+
+  /**
+   * CV update
+   */
+  export type CVUpdateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the CV
+     */
+    select?: CVSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the CV
+     */
+    omit?: CVOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: CVInclude<ExtArgs> | null
+    /**
+     * The data needed to update a CV.
+     */
+    data: XOR<CVUpdateInput, CVUncheckedUpdateInput>
+    /**
+     * Choose, which CV to update.
+     */
+    where: CVWhereUniqueInput
+  }
+
+  /**
+   * CV updateMany
+   */
+  export type CVUpdateManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * The data used to update CVS.
+     */
+    data: XOR<CVUpdateManyMutationInput, CVUncheckedUpdateManyInput>
+    /**
+     * Filter which CVS to update
+     */
+    where?: CVWhereInput
+    /**
+     * Limit how many CVS to update.
+     */
+    limit?: number
+  }
+
+  /**
+   * CV updateManyAndReturn
+   */
+  export type CVUpdateManyAndReturnArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the CV
+     */
+    select?: CVSelectUpdateManyAndReturn<ExtArgs> | null
+    /**
+     * Omit specific fields from the CV
+     */
+    omit?: CVOmit<ExtArgs> | null
+    /**
+     * The data used to update CVS.
+     */
+    data: XOR<CVUpdateManyMutationInput, CVUncheckedUpdateManyInput>
+    /**
+     * Filter which CVS to update
+     */
+    where?: CVWhereInput
+    /**
+     * Limit how many CVS to update.
+     */
+    limit?: number
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: CVIncludeUpdateManyAndReturn<ExtArgs> | null
+  }
+
+  /**
+   * CV upsert
+   */
+  export type CVUpsertArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the CV
+     */
+    select?: CVSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the CV
+     */
+    omit?: CVOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: CVInclude<ExtArgs> | null
+    /**
+     * The filter to search for the CV to update in case it exists.
+     */
+    where: CVWhereUniqueInput
+    /**
+     * In case the CV found by the `where` argument doesn't exist, create a new CV with this data.
+     */
+    create: XOR<CVCreateInput, CVUncheckedCreateInput>
+    /**
+     * In case the CV was found with the provided `where` argument, update it with this data.
+     */
+    update: XOR<CVUpdateInput, CVUncheckedUpdateInput>
+  }
+
+  /**
+   * CV delete
+   */
+  export type CVDeleteArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the CV
+     */
+    select?: CVSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the CV
+     */
+    omit?: CVOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: CVInclude<ExtArgs> | null
+    /**
+     * Filter which CV to delete.
+     */
+    where: CVWhereUniqueInput
+  }
+
+  /**
+   * CV deleteMany
+   */
+  export type CVDeleteManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Filter which CVS to delete
+     */
+    where?: CVWhereInput
+    /**
+     * Limit how many CVS to delete.
+     */
+    limit?: number
+  }
+
+  /**
+   * CV without action
+   */
+  export type CVDefaultArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the CV
+     */
+    select?: CVSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the CV
+     */
+    omit?: CVOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: CVInclude<ExtArgs> | null
+  }
+
+
+  /**
    * Enums
    */
 
@@ -5792,6 +7015,7 @@ export namespace Prisma {
     description: 'description',
     companyName: 'companyName',
     createdAt: 'createdAt',
+    processed_text: 'processed_text',
     employerId: 'employerId'
   };
 
@@ -5818,6 +7042,17 @@ export namespace Prisma {
   export type SavedJobScalarFieldEnum = (typeof SavedJobScalarFieldEnum)[keyof typeof SavedJobScalarFieldEnum]
 
 
+  export const CVScalarFieldEnum: {
+    id: 'id',
+    userId: 'userId',
+    filePath: 'filePath',
+    text: 'text',
+    createdAt: 'createdAt'
+  };
+
+  export type CVScalarFieldEnum = (typeof CVScalarFieldEnum)[keyof typeof CVScalarFieldEnum]
+
+
   export const SortOrder: {
     asc: 'asc',
     desc: 'desc'
@@ -5832,6 +7067,14 @@ export namespace Prisma {
   };
 
   export type QueryMode = (typeof QueryMode)[keyof typeof QueryMode]
+
+
+  export const NullsOrder: {
+    first: 'first',
+    last: 'last'
+  };
+
+  export type NullsOrder = (typeof NullsOrder)[keyof typeof NullsOrder]
 
 
   /**
@@ -5911,6 +7154,7 @@ export namespace Prisma {
     jobPostings?: JobPostingListRelationFilter
     applications?: ApplicationListRelationFilter
     savedJobs?: SavedJobListRelationFilter
+    cv?: XOR<CVNullableScalarRelationFilter, CVWhereInput> | null
   }
 
   export type UserOrderByWithRelationInput = {
@@ -5923,6 +7167,7 @@ export namespace Prisma {
     jobPostings?: JobPostingOrderByRelationAggregateInput
     applications?: ApplicationOrderByRelationAggregateInput
     savedJobs?: SavedJobOrderByRelationAggregateInput
+    cv?: CVOrderByWithRelationInput
   }
 
   export type UserWhereUniqueInput = Prisma.AtLeast<{
@@ -5938,6 +7183,7 @@ export namespace Prisma {
     jobPostings?: JobPostingListRelationFilter
     applications?: ApplicationListRelationFilter
     savedJobs?: SavedJobListRelationFilter
+    cv?: XOR<CVNullableScalarRelationFilter, CVWhereInput> | null
   }, "id" | "email">
 
   export type UserOrderByWithAggregationInput = {
@@ -5975,6 +7221,7 @@ export namespace Prisma {
     description?: StringFilter<"JobPosting"> | string
     companyName?: StringFilter<"JobPosting"> | string
     createdAt?: DateTimeFilter<"JobPosting"> | Date | string
+    processed_text?: StringNullableFilter<"JobPosting"> | string | null
     employerId?: IntFilter<"JobPosting"> | number
     employer?: XOR<UserScalarRelationFilter, UserWhereInput>
     applications?: ApplicationListRelationFilter
@@ -5987,6 +7234,7 @@ export namespace Prisma {
     description?: SortOrder
     companyName?: SortOrder
     createdAt?: SortOrder
+    processed_text?: SortOrderInput | SortOrder
     employerId?: SortOrder
     employer?: UserOrderByWithRelationInput
     applications?: ApplicationOrderByRelationAggregateInput
@@ -6002,6 +7250,7 @@ export namespace Prisma {
     description?: StringFilter<"JobPosting"> | string
     companyName?: StringFilter<"JobPosting"> | string
     createdAt?: DateTimeFilter<"JobPosting"> | Date | string
+    processed_text?: StringNullableFilter<"JobPosting"> | string | null
     employerId?: IntFilter<"JobPosting"> | number
     employer?: XOR<UserScalarRelationFilter, UserWhereInput>
     applications?: ApplicationListRelationFilter
@@ -6014,6 +7263,7 @@ export namespace Prisma {
     description?: SortOrder
     companyName?: SortOrder
     createdAt?: SortOrder
+    processed_text?: SortOrderInput | SortOrder
     employerId?: SortOrder
     _count?: JobPostingCountOrderByAggregateInput
     _avg?: JobPostingAvgOrderByAggregateInput
@@ -6031,6 +7281,7 @@ export namespace Prisma {
     description?: StringWithAggregatesFilter<"JobPosting"> | string
     companyName?: StringWithAggregatesFilter<"JobPosting"> | string
     createdAt?: DateTimeWithAggregatesFilter<"JobPosting"> | Date | string
+    processed_text?: StringNullableWithAggregatesFilter<"JobPosting"> | string | null
     employerId?: IntWithAggregatesFilter<"JobPosting"> | number
   }
 
@@ -6144,6 +7395,63 @@ export namespace Prisma {
     createdAt?: DateTimeWithAggregatesFilter<"SavedJob"> | Date | string
   }
 
+  export type CVWhereInput = {
+    AND?: CVWhereInput | CVWhereInput[]
+    OR?: CVWhereInput[]
+    NOT?: CVWhereInput | CVWhereInput[]
+    id?: IntFilter<"CV"> | number
+    userId?: IntFilter<"CV"> | number
+    filePath?: StringFilter<"CV"> | string
+    text?: StringFilter<"CV"> | string
+    createdAt?: DateTimeFilter<"CV"> | Date | string
+    user?: XOR<UserScalarRelationFilter, UserWhereInput>
+  }
+
+  export type CVOrderByWithRelationInput = {
+    id?: SortOrder
+    userId?: SortOrder
+    filePath?: SortOrder
+    text?: SortOrder
+    createdAt?: SortOrder
+    user?: UserOrderByWithRelationInput
+  }
+
+  export type CVWhereUniqueInput = Prisma.AtLeast<{
+    id?: number
+    userId?: number
+    AND?: CVWhereInput | CVWhereInput[]
+    OR?: CVWhereInput[]
+    NOT?: CVWhereInput | CVWhereInput[]
+    filePath?: StringFilter<"CV"> | string
+    text?: StringFilter<"CV"> | string
+    createdAt?: DateTimeFilter<"CV"> | Date | string
+    user?: XOR<UserScalarRelationFilter, UserWhereInput>
+  }, "id" | "userId">
+
+  export type CVOrderByWithAggregationInput = {
+    id?: SortOrder
+    userId?: SortOrder
+    filePath?: SortOrder
+    text?: SortOrder
+    createdAt?: SortOrder
+    _count?: CVCountOrderByAggregateInput
+    _avg?: CVAvgOrderByAggregateInput
+    _max?: CVMaxOrderByAggregateInput
+    _min?: CVMinOrderByAggregateInput
+    _sum?: CVSumOrderByAggregateInput
+  }
+
+  export type CVScalarWhereWithAggregatesInput = {
+    AND?: CVScalarWhereWithAggregatesInput | CVScalarWhereWithAggregatesInput[]
+    OR?: CVScalarWhereWithAggregatesInput[]
+    NOT?: CVScalarWhereWithAggregatesInput | CVScalarWhereWithAggregatesInput[]
+    id?: IntWithAggregatesFilter<"CV"> | number
+    userId?: IntWithAggregatesFilter<"CV"> | number
+    filePath?: StringWithAggregatesFilter<"CV"> | string
+    text?: StringWithAggregatesFilter<"CV"> | string
+    createdAt?: DateTimeWithAggregatesFilter<"CV"> | Date | string
+  }
+
   export type UserCreateInput = {
     fullName: string
     email: string
@@ -6153,6 +7461,7 @@ export namespace Prisma {
     jobPostings?: JobPostingCreateNestedManyWithoutEmployerInput
     applications?: ApplicationCreateNestedManyWithoutUserInput
     savedJobs?: SavedJobCreateNestedManyWithoutUserInput
+    cv?: CVCreateNestedOneWithoutUserInput
   }
 
   export type UserUncheckedCreateInput = {
@@ -6165,6 +7474,7 @@ export namespace Prisma {
     jobPostings?: JobPostingUncheckedCreateNestedManyWithoutEmployerInput
     applications?: ApplicationUncheckedCreateNestedManyWithoutUserInput
     savedJobs?: SavedJobUncheckedCreateNestedManyWithoutUserInput
+    cv?: CVUncheckedCreateNestedOneWithoutUserInput
   }
 
   export type UserUpdateInput = {
@@ -6176,6 +7486,7 @@ export namespace Prisma {
     jobPostings?: JobPostingUpdateManyWithoutEmployerNestedInput
     applications?: ApplicationUpdateManyWithoutUserNestedInput
     savedJobs?: SavedJobUpdateManyWithoutUserNestedInput
+    cv?: CVUpdateOneWithoutUserNestedInput
   }
 
   export type UserUncheckedUpdateInput = {
@@ -6188,6 +7499,7 @@ export namespace Prisma {
     jobPostings?: JobPostingUncheckedUpdateManyWithoutEmployerNestedInput
     applications?: ApplicationUncheckedUpdateManyWithoutUserNestedInput
     savedJobs?: SavedJobUncheckedUpdateManyWithoutUserNestedInput
+    cv?: CVUncheckedUpdateOneWithoutUserNestedInput
   }
 
   export type UserCreateManyInput = {
@@ -6221,6 +7533,7 @@ export namespace Prisma {
     description: string
     companyName: string
     createdAt?: Date | string
+    processed_text?: string | null
     employer: UserCreateNestedOneWithoutJobPostingsInput
     applications?: ApplicationCreateNestedManyWithoutJobPostingInput
     savedBy?: SavedJobCreateNestedManyWithoutJobPostingInput
@@ -6232,6 +7545,7 @@ export namespace Prisma {
     description: string
     companyName: string
     createdAt?: Date | string
+    processed_text?: string | null
     employerId: number
     applications?: ApplicationUncheckedCreateNestedManyWithoutJobPostingInput
     savedBy?: SavedJobUncheckedCreateNestedManyWithoutJobPostingInput
@@ -6242,6 +7556,7 @@ export namespace Prisma {
     description?: StringFieldUpdateOperationsInput | string
     companyName?: StringFieldUpdateOperationsInput | string
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    processed_text?: NullableStringFieldUpdateOperationsInput | string | null
     employer?: UserUpdateOneRequiredWithoutJobPostingsNestedInput
     applications?: ApplicationUpdateManyWithoutJobPostingNestedInput
     savedBy?: SavedJobUpdateManyWithoutJobPostingNestedInput
@@ -6253,6 +7568,7 @@ export namespace Prisma {
     description?: StringFieldUpdateOperationsInput | string
     companyName?: StringFieldUpdateOperationsInput | string
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    processed_text?: NullableStringFieldUpdateOperationsInput | string | null
     employerId?: IntFieldUpdateOperationsInput | number
     applications?: ApplicationUncheckedUpdateManyWithoutJobPostingNestedInput
     savedBy?: SavedJobUncheckedUpdateManyWithoutJobPostingNestedInput
@@ -6264,6 +7580,7 @@ export namespace Prisma {
     description: string
     companyName: string
     createdAt?: Date | string
+    processed_text?: string | null
     employerId: number
   }
 
@@ -6272,6 +7589,7 @@ export namespace Prisma {
     description?: StringFieldUpdateOperationsInput | string
     companyName?: StringFieldUpdateOperationsInput | string
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    processed_text?: NullableStringFieldUpdateOperationsInput | string | null
   }
 
   export type JobPostingUncheckedUpdateManyInput = {
@@ -6280,6 +7598,7 @@ export namespace Prisma {
     description?: StringFieldUpdateOperationsInput | string
     companyName?: StringFieldUpdateOperationsInput | string
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    processed_text?: NullableStringFieldUpdateOperationsInput | string | null
     employerId?: IntFieldUpdateOperationsInput | number
   }
 
@@ -6371,6 +7690,58 @@ export namespace Prisma {
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
   }
 
+  export type CVCreateInput = {
+    filePath: string
+    text: string
+    createdAt?: Date | string
+    user: UserCreateNestedOneWithoutCvInput
+  }
+
+  export type CVUncheckedCreateInput = {
+    id?: number
+    userId: number
+    filePath: string
+    text: string
+    createdAt?: Date | string
+  }
+
+  export type CVUpdateInput = {
+    filePath?: StringFieldUpdateOperationsInput | string
+    text?: StringFieldUpdateOperationsInput | string
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    user?: UserUpdateOneRequiredWithoutCvNestedInput
+  }
+
+  export type CVUncheckedUpdateInput = {
+    id?: IntFieldUpdateOperationsInput | number
+    userId?: IntFieldUpdateOperationsInput | number
+    filePath?: StringFieldUpdateOperationsInput | string
+    text?: StringFieldUpdateOperationsInput | string
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type CVCreateManyInput = {
+    id?: number
+    userId: number
+    filePath: string
+    text: string
+    createdAt?: Date | string
+  }
+
+  export type CVUpdateManyMutationInput = {
+    filePath?: StringFieldUpdateOperationsInput | string
+    text?: StringFieldUpdateOperationsInput | string
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type CVUncheckedUpdateManyInput = {
+    id?: IntFieldUpdateOperationsInput | number
+    userId?: IntFieldUpdateOperationsInput | number
+    filePath?: StringFieldUpdateOperationsInput | string
+    text?: StringFieldUpdateOperationsInput | string
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
   export type IntFilter<$PrismaModel = never> = {
     equals?: number | IntFieldRefInput<$PrismaModel>
     in?: number[] | ListIntFieldRefInput<$PrismaModel>
@@ -6424,6 +7795,11 @@ export namespace Prisma {
     every?: SavedJobWhereInput
     some?: SavedJobWhereInput
     none?: SavedJobWhereInput
+  }
+
+  export type CVNullableScalarRelationFilter = {
+    is?: CVWhereInput | null
+    isNot?: CVWhereInput | null
   }
 
   export type JobPostingOrderByRelationAggregateInput = {
@@ -6521,9 +7897,29 @@ export namespace Prisma {
     _max?: NestedDateTimeFilter<$PrismaModel>
   }
 
+  export type StringNullableFilter<$PrismaModel = never> = {
+    equals?: string | StringFieldRefInput<$PrismaModel> | null
+    in?: string[] | ListStringFieldRefInput<$PrismaModel> | null
+    notIn?: string[] | ListStringFieldRefInput<$PrismaModel> | null
+    lt?: string | StringFieldRefInput<$PrismaModel>
+    lte?: string | StringFieldRefInput<$PrismaModel>
+    gt?: string | StringFieldRefInput<$PrismaModel>
+    gte?: string | StringFieldRefInput<$PrismaModel>
+    contains?: string | StringFieldRefInput<$PrismaModel>
+    startsWith?: string | StringFieldRefInput<$PrismaModel>
+    endsWith?: string | StringFieldRefInput<$PrismaModel>
+    mode?: QueryMode
+    not?: NestedStringNullableFilter<$PrismaModel> | string | null
+  }
+
   export type UserScalarRelationFilter = {
     is?: UserWhereInput
     isNot?: UserWhereInput
+  }
+
+  export type SortOrderInput = {
+    sort: SortOrder
+    nulls?: NullsOrder
   }
 
   export type JobPostingCountOrderByAggregateInput = {
@@ -6532,6 +7928,7 @@ export namespace Prisma {
     description?: SortOrder
     companyName?: SortOrder
     createdAt?: SortOrder
+    processed_text?: SortOrder
     employerId?: SortOrder
   }
 
@@ -6546,6 +7943,7 @@ export namespace Prisma {
     description?: SortOrder
     companyName?: SortOrder
     createdAt?: SortOrder
+    processed_text?: SortOrder
     employerId?: SortOrder
   }
 
@@ -6555,12 +7953,31 @@ export namespace Prisma {
     description?: SortOrder
     companyName?: SortOrder
     createdAt?: SortOrder
+    processed_text?: SortOrder
     employerId?: SortOrder
   }
 
   export type JobPostingSumOrderByAggregateInput = {
     id?: SortOrder
     employerId?: SortOrder
+  }
+
+  export type StringNullableWithAggregatesFilter<$PrismaModel = never> = {
+    equals?: string | StringFieldRefInput<$PrismaModel> | null
+    in?: string[] | ListStringFieldRefInput<$PrismaModel> | null
+    notIn?: string[] | ListStringFieldRefInput<$PrismaModel> | null
+    lt?: string | StringFieldRefInput<$PrismaModel>
+    lte?: string | StringFieldRefInput<$PrismaModel>
+    gt?: string | StringFieldRefInput<$PrismaModel>
+    gte?: string | StringFieldRefInput<$PrismaModel>
+    contains?: string | StringFieldRefInput<$PrismaModel>
+    startsWith?: string | StringFieldRefInput<$PrismaModel>
+    endsWith?: string | StringFieldRefInput<$PrismaModel>
+    mode?: QueryMode
+    not?: NestedStringNullableWithAggregatesFilter<$PrismaModel> | string | null
+    _count?: NestedIntNullableFilter<$PrismaModel>
+    _min?: NestedStringNullableFilter<$PrismaModel>
+    _max?: NestedStringNullableFilter<$PrismaModel>
   }
 
   export type JobPostingScalarRelationFilter = {
@@ -6634,6 +8051,40 @@ export namespace Prisma {
     jobPostingId?: SortOrder
   }
 
+  export type CVCountOrderByAggregateInput = {
+    id?: SortOrder
+    userId?: SortOrder
+    filePath?: SortOrder
+    text?: SortOrder
+    createdAt?: SortOrder
+  }
+
+  export type CVAvgOrderByAggregateInput = {
+    id?: SortOrder
+    userId?: SortOrder
+  }
+
+  export type CVMaxOrderByAggregateInput = {
+    id?: SortOrder
+    userId?: SortOrder
+    filePath?: SortOrder
+    text?: SortOrder
+    createdAt?: SortOrder
+  }
+
+  export type CVMinOrderByAggregateInput = {
+    id?: SortOrder
+    userId?: SortOrder
+    filePath?: SortOrder
+    text?: SortOrder
+    createdAt?: SortOrder
+  }
+
+  export type CVSumOrderByAggregateInput = {
+    id?: SortOrder
+    userId?: SortOrder
+  }
+
   export type JobPostingCreateNestedManyWithoutEmployerInput = {
     create?: XOR<JobPostingCreateWithoutEmployerInput, JobPostingUncheckedCreateWithoutEmployerInput> | JobPostingCreateWithoutEmployerInput[] | JobPostingUncheckedCreateWithoutEmployerInput[]
     connectOrCreate?: JobPostingCreateOrConnectWithoutEmployerInput | JobPostingCreateOrConnectWithoutEmployerInput[]
@@ -6655,6 +8106,12 @@ export namespace Prisma {
     connect?: SavedJobWhereUniqueInput | SavedJobWhereUniqueInput[]
   }
 
+  export type CVCreateNestedOneWithoutUserInput = {
+    create?: XOR<CVCreateWithoutUserInput, CVUncheckedCreateWithoutUserInput>
+    connectOrCreate?: CVCreateOrConnectWithoutUserInput
+    connect?: CVWhereUniqueInput
+  }
+
   export type JobPostingUncheckedCreateNestedManyWithoutEmployerInput = {
     create?: XOR<JobPostingCreateWithoutEmployerInput, JobPostingUncheckedCreateWithoutEmployerInput> | JobPostingCreateWithoutEmployerInput[] | JobPostingUncheckedCreateWithoutEmployerInput[]
     connectOrCreate?: JobPostingCreateOrConnectWithoutEmployerInput | JobPostingCreateOrConnectWithoutEmployerInput[]
@@ -6674,6 +8131,12 @@ export namespace Prisma {
     connectOrCreate?: SavedJobCreateOrConnectWithoutUserInput | SavedJobCreateOrConnectWithoutUserInput[]
     createMany?: SavedJobCreateManyUserInputEnvelope
     connect?: SavedJobWhereUniqueInput | SavedJobWhereUniqueInput[]
+  }
+
+  export type CVUncheckedCreateNestedOneWithoutUserInput = {
+    create?: XOR<CVCreateWithoutUserInput, CVUncheckedCreateWithoutUserInput>
+    connectOrCreate?: CVCreateOrConnectWithoutUserInput
+    connect?: CVWhereUniqueInput
   }
 
   export type StringFieldUpdateOperationsInput = {
@@ -6726,6 +8189,16 @@ export namespace Prisma {
     deleteMany?: SavedJobScalarWhereInput | SavedJobScalarWhereInput[]
   }
 
+  export type CVUpdateOneWithoutUserNestedInput = {
+    create?: XOR<CVCreateWithoutUserInput, CVUncheckedCreateWithoutUserInput>
+    connectOrCreate?: CVCreateOrConnectWithoutUserInput
+    upsert?: CVUpsertWithoutUserInput
+    disconnect?: CVWhereInput | boolean
+    delete?: CVWhereInput | boolean
+    connect?: CVWhereUniqueInput
+    update?: XOR<XOR<CVUpdateToOneWithWhereWithoutUserInput, CVUpdateWithoutUserInput>, CVUncheckedUpdateWithoutUserInput>
+  }
+
   export type IntFieldUpdateOperationsInput = {
     set?: number
     increment?: number
@@ -6776,6 +8249,16 @@ export namespace Prisma {
     deleteMany?: SavedJobScalarWhereInput | SavedJobScalarWhereInput[]
   }
 
+  export type CVUncheckedUpdateOneWithoutUserNestedInput = {
+    create?: XOR<CVCreateWithoutUserInput, CVUncheckedCreateWithoutUserInput>
+    connectOrCreate?: CVCreateOrConnectWithoutUserInput
+    upsert?: CVUpsertWithoutUserInput
+    disconnect?: CVWhereInput | boolean
+    delete?: CVWhereInput | boolean
+    connect?: CVWhereUniqueInput
+    update?: XOR<XOR<CVUpdateToOneWithWhereWithoutUserInput, CVUpdateWithoutUserInput>, CVUncheckedUpdateWithoutUserInput>
+  }
+
   export type UserCreateNestedOneWithoutJobPostingsInput = {
     create?: XOR<UserCreateWithoutJobPostingsInput, UserUncheckedCreateWithoutJobPostingsInput>
     connectOrCreate?: UserCreateOrConnectWithoutJobPostingsInput
@@ -6808,6 +8291,10 @@ export namespace Prisma {
     connectOrCreate?: SavedJobCreateOrConnectWithoutJobPostingInput | SavedJobCreateOrConnectWithoutJobPostingInput[]
     createMany?: SavedJobCreateManyJobPostingInputEnvelope
     connect?: SavedJobWhereUniqueInput | SavedJobWhereUniqueInput[]
+  }
+
+  export type NullableStringFieldUpdateOperationsInput = {
+    set?: string | null
   }
 
   export type UserUpdateOneRequiredWithoutJobPostingsNestedInput = {
@@ -6930,6 +8417,20 @@ export namespace Prisma {
     update?: XOR<XOR<JobPostingUpdateToOneWithWhereWithoutSavedByInput, JobPostingUpdateWithoutSavedByInput>, JobPostingUncheckedUpdateWithoutSavedByInput>
   }
 
+  export type UserCreateNestedOneWithoutCvInput = {
+    create?: XOR<UserCreateWithoutCvInput, UserUncheckedCreateWithoutCvInput>
+    connectOrCreate?: UserCreateOrConnectWithoutCvInput
+    connect?: UserWhereUniqueInput
+  }
+
+  export type UserUpdateOneRequiredWithoutCvNestedInput = {
+    create?: XOR<UserCreateWithoutCvInput, UserUncheckedCreateWithoutCvInput>
+    connectOrCreate?: UserCreateOrConnectWithoutCvInput
+    upsert?: UserUpsertWithoutCvInput
+    connect?: UserWhereUniqueInput
+    update?: XOR<XOR<UserUpdateToOneWithWhereWithoutCvInput, UserUpdateWithoutCvInput>, UserUncheckedUpdateWithoutCvInput>
+  }
+
   export type NestedIntFilter<$PrismaModel = never> = {
     equals?: number | IntFieldRefInput<$PrismaModel>
     in?: number[] | ListIntFieldRefInput<$PrismaModel>
@@ -7024,11 +8525,54 @@ export namespace Prisma {
     _max?: NestedDateTimeFilter<$PrismaModel>
   }
 
+  export type NestedStringNullableFilter<$PrismaModel = never> = {
+    equals?: string | StringFieldRefInput<$PrismaModel> | null
+    in?: string[] | ListStringFieldRefInput<$PrismaModel> | null
+    notIn?: string[] | ListStringFieldRefInput<$PrismaModel> | null
+    lt?: string | StringFieldRefInput<$PrismaModel>
+    lte?: string | StringFieldRefInput<$PrismaModel>
+    gt?: string | StringFieldRefInput<$PrismaModel>
+    gte?: string | StringFieldRefInput<$PrismaModel>
+    contains?: string | StringFieldRefInput<$PrismaModel>
+    startsWith?: string | StringFieldRefInput<$PrismaModel>
+    endsWith?: string | StringFieldRefInput<$PrismaModel>
+    not?: NestedStringNullableFilter<$PrismaModel> | string | null
+  }
+
+  export type NestedStringNullableWithAggregatesFilter<$PrismaModel = never> = {
+    equals?: string | StringFieldRefInput<$PrismaModel> | null
+    in?: string[] | ListStringFieldRefInput<$PrismaModel> | null
+    notIn?: string[] | ListStringFieldRefInput<$PrismaModel> | null
+    lt?: string | StringFieldRefInput<$PrismaModel>
+    lte?: string | StringFieldRefInput<$PrismaModel>
+    gt?: string | StringFieldRefInput<$PrismaModel>
+    gte?: string | StringFieldRefInput<$PrismaModel>
+    contains?: string | StringFieldRefInput<$PrismaModel>
+    startsWith?: string | StringFieldRefInput<$PrismaModel>
+    endsWith?: string | StringFieldRefInput<$PrismaModel>
+    not?: NestedStringNullableWithAggregatesFilter<$PrismaModel> | string | null
+    _count?: NestedIntNullableFilter<$PrismaModel>
+    _min?: NestedStringNullableFilter<$PrismaModel>
+    _max?: NestedStringNullableFilter<$PrismaModel>
+  }
+
+  export type NestedIntNullableFilter<$PrismaModel = never> = {
+    equals?: number | IntFieldRefInput<$PrismaModel> | null
+    in?: number[] | ListIntFieldRefInput<$PrismaModel> | null
+    notIn?: number[] | ListIntFieldRefInput<$PrismaModel> | null
+    lt?: number | IntFieldRefInput<$PrismaModel>
+    lte?: number | IntFieldRefInput<$PrismaModel>
+    gt?: number | IntFieldRefInput<$PrismaModel>
+    gte?: number | IntFieldRefInput<$PrismaModel>
+    not?: NestedIntNullableFilter<$PrismaModel> | number | null
+  }
+
   export type JobPostingCreateWithoutEmployerInput = {
     title: string
     description: string
     companyName: string
     createdAt?: Date | string
+    processed_text?: string | null
     applications?: ApplicationCreateNestedManyWithoutJobPostingInput
     savedBy?: SavedJobCreateNestedManyWithoutJobPostingInput
   }
@@ -7039,6 +8583,7 @@ export namespace Prisma {
     description: string
     companyName: string
     createdAt?: Date | string
+    processed_text?: string | null
     applications?: ApplicationUncheckedCreateNestedManyWithoutJobPostingInput
     savedBy?: SavedJobUncheckedCreateNestedManyWithoutJobPostingInput
   }
@@ -7095,6 +8640,24 @@ export namespace Prisma {
     skipDuplicates?: boolean
   }
 
+  export type CVCreateWithoutUserInput = {
+    filePath: string
+    text: string
+    createdAt?: Date | string
+  }
+
+  export type CVUncheckedCreateWithoutUserInput = {
+    id?: number
+    filePath: string
+    text: string
+    createdAt?: Date | string
+  }
+
+  export type CVCreateOrConnectWithoutUserInput = {
+    where: CVWhereUniqueInput
+    create: XOR<CVCreateWithoutUserInput, CVUncheckedCreateWithoutUserInput>
+  }
+
   export type JobPostingUpsertWithWhereUniqueWithoutEmployerInput = {
     where: JobPostingWhereUniqueInput
     update: XOR<JobPostingUpdateWithoutEmployerInput, JobPostingUncheckedUpdateWithoutEmployerInput>
@@ -7120,6 +8683,7 @@ export namespace Prisma {
     description?: StringFilter<"JobPosting"> | string
     companyName?: StringFilter<"JobPosting"> | string
     createdAt?: DateTimeFilter<"JobPosting"> | Date | string
+    processed_text?: StringNullableFilter<"JobPosting"> | string | null
     employerId?: IntFilter<"JobPosting"> | number
   }
 
@@ -7175,6 +8739,30 @@ export namespace Prisma {
     createdAt?: DateTimeFilter<"SavedJob"> | Date | string
   }
 
+  export type CVUpsertWithoutUserInput = {
+    update: XOR<CVUpdateWithoutUserInput, CVUncheckedUpdateWithoutUserInput>
+    create: XOR<CVCreateWithoutUserInput, CVUncheckedCreateWithoutUserInput>
+    where?: CVWhereInput
+  }
+
+  export type CVUpdateToOneWithWhereWithoutUserInput = {
+    where?: CVWhereInput
+    data: XOR<CVUpdateWithoutUserInput, CVUncheckedUpdateWithoutUserInput>
+  }
+
+  export type CVUpdateWithoutUserInput = {
+    filePath?: StringFieldUpdateOperationsInput | string
+    text?: StringFieldUpdateOperationsInput | string
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type CVUncheckedUpdateWithoutUserInput = {
+    id?: IntFieldUpdateOperationsInput | number
+    filePath?: StringFieldUpdateOperationsInput | string
+    text?: StringFieldUpdateOperationsInput | string
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
   export type UserCreateWithoutJobPostingsInput = {
     fullName: string
     email: string
@@ -7183,6 +8771,7 @@ export namespace Prisma {
     createdAt?: Date | string
     applications?: ApplicationCreateNestedManyWithoutUserInput
     savedJobs?: SavedJobCreateNestedManyWithoutUserInput
+    cv?: CVCreateNestedOneWithoutUserInput
   }
 
   export type UserUncheckedCreateWithoutJobPostingsInput = {
@@ -7194,6 +8783,7 @@ export namespace Prisma {
     createdAt?: Date | string
     applications?: ApplicationUncheckedCreateNestedManyWithoutUserInput
     savedJobs?: SavedJobUncheckedCreateNestedManyWithoutUserInput
+    cv?: CVUncheckedCreateNestedOneWithoutUserInput
   }
 
   export type UserCreateOrConnectWithoutJobPostingsInput = {
@@ -7262,6 +8852,7 @@ export namespace Prisma {
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     applications?: ApplicationUpdateManyWithoutUserNestedInput
     savedJobs?: SavedJobUpdateManyWithoutUserNestedInput
+    cv?: CVUpdateOneWithoutUserNestedInput
   }
 
   export type UserUncheckedUpdateWithoutJobPostingsInput = {
@@ -7273,6 +8864,7 @@ export namespace Prisma {
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     applications?: ApplicationUncheckedUpdateManyWithoutUserNestedInput
     savedJobs?: SavedJobUncheckedUpdateManyWithoutUserNestedInput
+    cv?: CVUncheckedUpdateOneWithoutUserNestedInput
   }
 
   export type ApplicationUpsertWithWhereUniqueWithoutJobPostingInput = {
@@ -7315,6 +8907,7 @@ export namespace Prisma {
     createdAt?: Date | string
     jobPostings?: JobPostingCreateNestedManyWithoutEmployerInput
     savedJobs?: SavedJobCreateNestedManyWithoutUserInput
+    cv?: CVCreateNestedOneWithoutUserInput
   }
 
   export type UserUncheckedCreateWithoutApplicationsInput = {
@@ -7326,6 +8919,7 @@ export namespace Prisma {
     createdAt?: Date | string
     jobPostings?: JobPostingUncheckedCreateNestedManyWithoutEmployerInput
     savedJobs?: SavedJobUncheckedCreateNestedManyWithoutUserInput
+    cv?: CVUncheckedCreateNestedOneWithoutUserInput
   }
 
   export type UserCreateOrConnectWithoutApplicationsInput = {
@@ -7338,6 +8932,7 @@ export namespace Prisma {
     description: string
     companyName: string
     createdAt?: Date | string
+    processed_text?: string | null
     employer: UserCreateNestedOneWithoutJobPostingsInput
     savedBy?: SavedJobCreateNestedManyWithoutJobPostingInput
   }
@@ -7348,6 +8943,7 @@ export namespace Prisma {
     description: string
     companyName: string
     createdAt?: Date | string
+    processed_text?: string | null
     employerId: number
     savedBy?: SavedJobUncheckedCreateNestedManyWithoutJobPostingInput
   }
@@ -7376,6 +8972,7 @@ export namespace Prisma {
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     jobPostings?: JobPostingUpdateManyWithoutEmployerNestedInput
     savedJobs?: SavedJobUpdateManyWithoutUserNestedInput
+    cv?: CVUpdateOneWithoutUserNestedInput
   }
 
   export type UserUncheckedUpdateWithoutApplicationsInput = {
@@ -7387,6 +8984,7 @@ export namespace Prisma {
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     jobPostings?: JobPostingUncheckedUpdateManyWithoutEmployerNestedInput
     savedJobs?: SavedJobUncheckedUpdateManyWithoutUserNestedInput
+    cv?: CVUncheckedUpdateOneWithoutUserNestedInput
   }
 
   export type JobPostingUpsertWithoutApplicationsInput = {
@@ -7405,6 +9003,7 @@ export namespace Prisma {
     description?: StringFieldUpdateOperationsInput | string
     companyName?: StringFieldUpdateOperationsInput | string
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    processed_text?: NullableStringFieldUpdateOperationsInput | string | null
     employer?: UserUpdateOneRequiredWithoutJobPostingsNestedInput
     savedBy?: SavedJobUpdateManyWithoutJobPostingNestedInput
   }
@@ -7415,6 +9014,7 @@ export namespace Prisma {
     description?: StringFieldUpdateOperationsInput | string
     companyName?: StringFieldUpdateOperationsInput | string
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    processed_text?: NullableStringFieldUpdateOperationsInput | string | null
     employerId?: IntFieldUpdateOperationsInput | number
     savedBy?: SavedJobUncheckedUpdateManyWithoutJobPostingNestedInput
   }
@@ -7427,6 +9027,7 @@ export namespace Prisma {
     createdAt?: Date | string
     jobPostings?: JobPostingCreateNestedManyWithoutEmployerInput
     applications?: ApplicationCreateNestedManyWithoutUserInput
+    cv?: CVCreateNestedOneWithoutUserInput
   }
 
   export type UserUncheckedCreateWithoutSavedJobsInput = {
@@ -7438,6 +9039,7 @@ export namespace Prisma {
     createdAt?: Date | string
     jobPostings?: JobPostingUncheckedCreateNestedManyWithoutEmployerInput
     applications?: ApplicationUncheckedCreateNestedManyWithoutUserInput
+    cv?: CVUncheckedCreateNestedOneWithoutUserInput
   }
 
   export type UserCreateOrConnectWithoutSavedJobsInput = {
@@ -7450,6 +9052,7 @@ export namespace Prisma {
     description: string
     companyName: string
     createdAt?: Date | string
+    processed_text?: string | null
     employer: UserCreateNestedOneWithoutJobPostingsInput
     applications?: ApplicationCreateNestedManyWithoutJobPostingInput
   }
@@ -7460,6 +9063,7 @@ export namespace Prisma {
     description: string
     companyName: string
     createdAt?: Date | string
+    processed_text?: string | null
     employerId: number
     applications?: ApplicationUncheckedCreateNestedManyWithoutJobPostingInput
   }
@@ -7488,6 +9092,7 @@ export namespace Prisma {
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     jobPostings?: JobPostingUpdateManyWithoutEmployerNestedInput
     applications?: ApplicationUpdateManyWithoutUserNestedInput
+    cv?: CVUpdateOneWithoutUserNestedInput
   }
 
   export type UserUncheckedUpdateWithoutSavedJobsInput = {
@@ -7499,6 +9104,7 @@ export namespace Prisma {
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     jobPostings?: JobPostingUncheckedUpdateManyWithoutEmployerNestedInput
     applications?: ApplicationUncheckedUpdateManyWithoutUserNestedInput
+    cv?: CVUncheckedUpdateOneWithoutUserNestedInput
   }
 
   export type JobPostingUpsertWithoutSavedByInput = {
@@ -7517,6 +9123,7 @@ export namespace Prisma {
     description?: StringFieldUpdateOperationsInput | string
     companyName?: StringFieldUpdateOperationsInput | string
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    processed_text?: NullableStringFieldUpdateOperationsInput | string | null
     employer?: UserUpdateOneRequiredWithoutJobPostingsNestedInput
     applications?: ApplicationUpdateManyWithoutJobPostingNestedInput
   }
@@ -7527,8 +9134,71 @@ export namespace Prisma {
     description?: StringFieldUpdateOperationsInput | string
     companyName?: StringFieldUpdateOperationsInput | string
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    processed_text?: NullableStringFieldUpdateOperationsInput | string | null
     employerId?: IntFieldUpdateOperationsInput | number
     applications?: ApplicationUncheckedUpdateManyWithoutJobPostingNestedInput
+  }
+
+  export type UserCreateWithoutCvInput = {
+    fullName: string
+    email: string
+    password: string
+    role: string
+    createdAt?: Date | string
+    jobPostings?: JobPostingCreateNestedManyWithoutEmployerInput
+    applications?: ApplicationCreateNestedManyWithoutUserInput
+    savedJobs?: SavedJobCreateNestedManyWithoutUserInput
+  }
+
+  export type UserUncheckedCreateWithoutCvInput = {
+    id?: number
+    fullName: string
+    email: string
+    password: string
+    role: string
+    createdAt?: Date | string
+    jobPostings?: JobPostingUncheckedCreateNestedManyWithoutEmployerInput
+    applications?: ApplicationUncheckedCreateNestedManyWithoutUserInput
+    savedJobs?: SavedJobUncheckedCreateNestedManyWithoutUserInput
+  }
+
+  export type UserCreateOrConnectWithoutCvInput = {
+    where: UserWhereUniqueInput
+    create: XOR<UserCreateWithoutCvInput, UserUncheckedCreateWithoutCvInput>
+  }
+
+  export type UserUpsertWithoutCvInput = {
+    update: XOR<UserUpdateWithoutCvInput, UserUncheckedUpdateWithoutCvInput>
+    create: XOR<UserCreateWithoutCvInput, UserUncheckedCreateWithoutCvInput>
+    where?: UserWhereInput
+  }
+
+  export type UserUpdateToOneWithWhereWithoutCvInput = {
+    where?: UserWhereInput
+    data: XOR<UserUpdateWithoutCvInput, UserUncheckedUpdateWithoutCvInput>
+  }
+
+  export type UserUpdateWithoutCvInput = {
+    fullName?: StringFieldUpdateOperationsInput | string
+    email?: StringFieldUpdateOperationsInput | string
+    password?: StringFieldUpdateOperationsInput | string
+    role?: StringFieldUpdateOperationsInput | string
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    jobPostings?: JobPostingUpdateManyWithoutEmployerNestedInput
+    applications?: ApplicationUpdateManyWithoutUserNestedInput
+    savedJobs?: SavedJobUpdateManyWithoutUserNestedInput
+  }
+
+  export type UserUncheckedUpdateWithoutCvInput = {
+    id?: IntFieldUpdateOperationsInput | number
+    fullName?: StringFieldUpdateOperationsInput | string
+    email?: StringFieldUpdateOperationsInput | string
+    password?: StringFieldUpdateOperationsInput | string
+    role?: StringFieldUpdateOperationsInput | string
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    jobPostings?: JobPostingUncheckedUpdateManyWithoutEmployerNestedInput
+    applications?: ApplicationUncheckedUpdateManyWithoutUserNestedInput
+    savedJobs?: SavedJobUncheckedUpdateManyWithoutUserNestedInput
   }
 
   export type JobPostingCreateManyEmployerInput = {
@@ -7537,6 +9207,7 @@ export namespace Prisma {
     description: string
     companyName: string
     createdAt?: Date | string
+    processed_text?: string | null
   }
 
   export type ApplicationCreateManyUserInput = {
@@ -7556,6 +9227,7 @@ export namespace Prisma {
     description?: StringFieldUpdateOperationsInput | string
     companyName?: StringFieldUpdateOperationsInput | string
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    processed_text?: NullableStringFieldUpdateOperationsInput | string | null
     applications?: ApplicationUpdateManyWithoutJobPostingNestedInput
     savedBy?: SavedJobUpdateManyWithoutJobPostingNestedInput
   }
@@ -7566,6 +9238,7 @@ export namespace Prisma {
     description?: StringFieldUpdateOperationsInput | string
     companyName?: StringFieldUpdateOperationsInput | string
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    processed_text?: NullableStringFieldUpdateOperationsInput | string | null
     applications?: ApplicationUncheckedUpdateManyWithoutJobPostingNestedInput
     savedBy?: SavedJobUncheckedUpdateManyWithoutJobPostingNestedInput
   }
@@ -7576,6 +9249,7 @@ export namespace Prisma {
     description?: StringFieldUpdateOperationsInput | string
     companyName?: StringFieldUpdateOperationsInput | string
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    processed_text?: NullableStringFieldUpdateOperationsInput | string | null
   }
 
   export type ApplicationUpdateWithoutUserInput = {

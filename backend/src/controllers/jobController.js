@@ -1,30 +1,41 @@
 const { PrismaClient } = require("../generated/prisma");
 const prisma = new PrismaClient();
+const axios = require("axios");
 
 const createJob = async (req, res) => {
-  const { title, description, companyName} = req.body;
-  const user = req.user; // middleware'den gelen kullanıcı
+  const user = req.user;
+  const { title, description, companyName } = req.body;
 
   if (user.role !== "EMPLOYER") {
     return res.status(403).json({ message: "Sadece işverenler ilan oluşturabilir." });
   }
 
   try {
+    // Önişleme için Python servisine istekte bulun
+    const preRes = await axios.post("http://localhost:8000/preprocess", {
+      cv_text: description
+    });
+
+    const processedText = preRes.data.processed_text;
+
+    // İlanı veritabanına kaydet
     const newJob = await prisma.jobPosting.create({
       data: {
         title,
         description,
         companyName,
-        employerId: user.userId
+        employerId: user.userId,
+        processed_text: processedText // 👈 Buraya kaydediyoruz
       }
     });
 
     res.status(201).json(newJob);
   } catch (error) {
-    console.error("İlan oluşturma hatası:", error);
-    res.status(500).json({ message: "Sunucu hatası" });
+    console.error("İlan ekleme hatası:", error);
+    res.status(500).json({ message: "İlan eklenemedi" });
   }
 };
+
 
 const getAllJobs = async (req, res) => {
   try {

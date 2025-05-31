@@ -18,14 +18,16 @@ model User {
   jobPostings  JobPosting[]
   applications Application[]
   savedJobs    SavedJob[]
+  cv           CV?
 }
 
 model JobPosting {
-  id          Int      @id @default(autoincrement())
-  title       String
-  description String
-  companyName String
-  createdAt   DateTime @default(now())
+  id             Int      @id @default(autoincrement())
+  title          String
+  description    String
+  companyName    String
+  createdAt      DateTime @default(now())
+  processed_text String?
 
   employerId   Int
   employer     User          @relation(fields: [employerId], references: [id])
@@ -51,4 +53,14 @@ model SavedJob {
 
   user       User       @relation(fields: [userId], references: [id])
   jobPosting JobPosting @relation(fields: [jobPostingId], references: [id])
+}
+
+model CV {
+  id        Int      @id @default(autoincrement())
+  userId    Int      @unique
+  filePath  String
+  text      String
+  createdAt DateTime @default(now())
+
+  user User @relation(fields: [userId], references: [id])
 }

@@ -24,6 +24,12 @@ app.use("/api/applications", applicationRoutes);
 const savedJobRoutes = require("./routes/savedJobRoutes");
 app.use("/api/saved-jobs", savedJobRoutes);
 
+const recommendationRoutes = require("./routes/recommendationRoutes");
+app.use("/api", recommendationRoutes);
+
+const cvRoutes = require("./routes/cvRoutes");
+app.use("/api/cv", cvRoutes);
+
 
 
 // Test endpoint

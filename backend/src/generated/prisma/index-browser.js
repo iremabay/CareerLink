@@ -135,6 +135,7 @@ exports.Prisma.JobPostingScalarFieldEnum = {
   description: 'description',
   companyName: 'companyName',
   createdAt: 'createdAt',
+  processed_text: 'processed_text',
   employerId: 'employerId'
 };
 
@@ -152,6 +153,14 @@ exports.Prisma.SavedJobScalarFieldEnum = {
   createdAt: 'createdAt'
 };
 
+exports.Prisma.CVScalarFieldEnum = {
+  id: 'id',
+  userId: 'userId',
+  filePath: 'filePath',
+  text: 'text',
+  createdAt: 'createdAt'
+};
+
 exports.Prisma.SortOrder = {
   asc: 'asc',
   desc: 'desc'
@@ -162,12 +171,18 @@ exports.Prisma.QueryMode = {
   insensitive: 'insensitive'
 };
 
+exports.Prisma.NullsOrder = {
+  first: 'first',
+  last: 'last'
+};
+
 
 exports.Prisma.ModelName = {
   User: 'User',
   JobPosting: 'JobPosting',
   Application: 'Application',
-  SavedJob: 'SavedJob'
+  SavedJob: 'SavedJob',
+  CV: 'CV'
 };
 
 /**
