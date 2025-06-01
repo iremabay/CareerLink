@@ -1,4 +1,4 @@
-from fastapi import FastAPI, HTTPException
+from fastapi import FastAPI, HTTPException, UploadFile, File
 from pydantic import BaseModel
 import pandas as pd
 import psycopg2
@@ -10,11 +10,14 @@ from sklearn.feature_extraction.text import TfidfVectorizer
 from sklearn.metrics.pairwise import cosine_similarity
 import jpype
 import os
+from io import BytesIO
+from PyPDF2 import PdfReader
 
 app = FastAPI()
 
-# Zemberek ve NLTK Ayarları
+latest_cv_processed = None  # En son yüklenen CV'nin işlenmiş hali burada tutulacak
 
+# Zemberek ve NLTK Ayarları
 jar_path = "zemberek-full.jar"
 if not os.path.exists(jar_path):
     raise FileNotFoundError(f"'{jar_path}' bulunamadı.")
@@ -30,6 +33,9 @@ morphology = TurkishMorphology.createWithDefaults()
 nltk.download("stopwords")
 nltk.download("punkt")
 turkish_stopwords = stopwords.words("turkish")
+
+
+#  Metin Önişleme Fonksiyonları
 
 def get_stem(word):
     try:
@@ -52,14 +58,13 @@ def preprocess_text(text):
     return " ".join(stemmed)
 
 
-#Request Modeli
+# Request Modeli
 
 class CVRequest(BaseModel):
     cv_text: str
 
 
-#  PostgreSQL'den Veri Çekme
-
+#  İş İlanlarını DB'den Çekme
 def fetch_job_postings_from_db():
     conn = psycopg2.connect(
         host="localhost",
@@ -68,17 +73,19 @@ def fetch_job_postings_from_db():
         password="123456",  
         port=5432
     )
-    query = 'SELECT id AS job_id, title, description, "companyName", processed_text FROM "JobPosting"'
+    query = 'SELECT id AS job_id, title, description, "companyName" AS company, processed_text FROM "JobPosting"'
     df = pd.read_sql(query, conn)
     conn.close()
-
-    # NaN olanları boş string yap
     df["processed_text"] = df["processed_text"].fillna("")
     return df
 
+# DB'den veri çek ve TF-IDF hesapla
+df_jobs = fetch_job_postings_from_db()
+vectorizer = TfidfVectorizer()
+job_vectors = vectorizer.fit_transform(df_jobs["processed_text"])
+
 
 # API Endpointleri
-
 @app.post("/preprocess")
 def preprocess_cv(request: CVRequest):
     try:
@@ -88,35 +95,54 @@ def preprocess_cv(request: CVRequest):
         print("Önişleme hatası:", e)
         raise HTTPException(status_code=500, detail="Önişleme yapılamadı.")
 
-@app.post("/recommend")
-def recommend_jobs(request: CVRequest):
+@app.post("/upload")
+async def upload_cv(file: UploadFile = File(...)):
+    global latest_cv_processed
+
     try:
-        df_jobs = fetch_job_postings_from_db()
-        if df_jobs.empty:
-            raise HTTPException(status_code=404, detail="Veritabanında iş ilanı bulunamadı.")
+        content = await file.read()
 
-        vectorizer = TfidfVectorizer()
-        job_vectors = vectorizer.fit_transform(df_jobs["processed_text"])
+        if file.filename.endswith(".pdf"):
+            reader = PdfReader(BytesIO(content))
+            text = " ".join([page.extract_text() or "" for page in reader.pages])
+        elif file.filename.endswith(".txt"):
+            text = content.decode("utf-8")
+        else:
+            raise HTTPException(status_code=400, detail="Sadece .pdf veya .txt dosyaları kabul edilir.")
 
-        # CV'yi önişle ve vektörle
-        processed_cv = preprocess_text(request.cv_text)
-        cv_vector = vectorizer.transform([processed_cv])
+        processed = preprocess_text(text)
+        latest_cv_processed = processed
+        return {"message": "CV başarıyla yüklendi ve işlendi."}
 
-        # Benzerlik hesapla
+    except Exception as e:
+        print("Upload/Önişleme hatası:", e)
+        raise HTTPException(status_code=500, detail="CV yükleme/işleme başarısız.")
+    
+    
+
+@app.get("/recommend")
+def recommend_jobs():
+    global latest_cv_processed
+
+    if not latest_cv_processed:
+        raise HTTPException(status_code=400, detail="Önce bir CV yüklemelisiniz (/upload).")
+
+    try:
+        cv_vector = vectorizer.transform([latest_cv_processed])
         similarities = cosine_similarity(cv_vector, job_vectors)[0]
         top_indices = similarities.argsort()[::-1][:3]
 
         recommendations = []
         for idx in top_indices:
-            job = df_jobs.iloc[idx]
             recommendations.append({
-                "job_id": int(job["job_id"]),
-                "title": job["title"],
-                "company": job["companyName"],
+                "job_id": int(df_jobs.iloc[idx]["job_id"]),
+                "title": df_jobs.iloc[idx]["title"],
+                "company": df_jobs.iloc[idx]["company"],
                 "similarity_score": round(similarities[idx], 4)
             })
 
         return recommendations
+
     except Exception as e:
-        print("Öneri hatası detay:", str(e)) 
-        raise HTTPException(status_code=500, detail="Öneri oluşturulamadı.")
+        print("Öneri hatası:", e)
+        raise HTTPException(status_code=500, detail="Öneri oluşturulamadı")
