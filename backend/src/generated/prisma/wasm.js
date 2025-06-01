@@ -143,7 +143,8 @@ exports.Prisma.ApplicationScalarFieldEnum = {
   id: 'id',
   userId: 'userId',
   jobPostingId: 'jobPostingId',
-  createdAt: 'createdAt'
+  createdAt: 'createdAt',
+  cvPath: 'cvPath'
 };
 
 exports.Prisma.SavedJobScalarFieldEnum = {

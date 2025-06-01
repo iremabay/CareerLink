@@ -3726,6 +3726,7 @@ export namespace Prisma {
     userId: number | null
     jobPostingId: number | null
     createdAt: Date | null
+    cvPath: string | null
   }
 
   export type ApplicationMaxAggregateOutputType = {
@@ -3733,6 +3734,7 @@ export namespace Prisma {
     userId: number | null
     jobPostingId: number | null
     createdAt: Date | null
+    cvPath: string | null
   }
 
   export type ApplicationCountAggregateOutputType = {
@@ -3740,6 +3742,7 @@ export namespace Prisma {
     userId: number
     jobPostingId: number
     createdAt: number
+    cvPath: number
     _all: number
   }
 
@@ -3761,6 +3764,7 @@ export namespace Prisma {
     userId?: true
     jobPostingId?: true
     createdAt?: true
+    cvPath?: true
   }
 
   export type ApplicationMaxAggregateInputType = {
@@ -3768,6 +3772,7 @@ export namespace Prisma {
     userId?: true
     jobPostingId?: true
     createdAt?: true
+    cvPath?: true
   }
 
   export type ApplicationCountAggregateInputType = {
@@ -3775,6 +3780,7 @@ export namespace Prisma {
     userId?: true
     jobPostingId?: true
     createdAt?: true
+    cvPath?: true
     _all?: true
   }
 
@@ -3869,6 +3875,7 @@ export namespace Prisma {
     userId: number
     jobPostingId: number
     createdAt: Date
+    cvPath: string | null
     _count: ApplicationCountAggregateOutputType | null
     _avg: ApplicationAvgAggregateOutputType | null
     _sum: ApplicationSumAggregateOutputType | null
@@ -3895,6 +3902,7 @@ export namespace Prisma {
     userId?: boolean
     jobPostingId?: boolean
     createdAt?: boolean
+    cvPath?: boolean
     user?: boolean | UserDefaultArgs<ExtArgs>
     jobPosting?: boolean | JobPostingDefaultArgs<ExtArgs>
   }, ExtArgs["result"]["application"]>
@@ -3904,6 +3912,7 @@ export namespace Prisma {
     userId?: boolean
     jobPostingId?: boolean
     createdAt?: boolean
+    cvPath?: boolean
     user?: boolean | UserDefaultArgs<ExtArgs>
     jobPosting?: boolean | JobPostingDefaultArgs<ExtArgs>
   }, ExtArgs["result"]["application"]>
@@ -3913,6 +3922,7 @@ export namespace Prisma {
     userId?: boolean
     jobPostingId?: boolean
     createdAt?: boolean
+    cvPath?: boolean
     user?: boolean | UserDefaultArgs<ExtArgs>
     jobPosting?: boolean | JobPostingDefaultArgs<ExtArgs>
   }, ExtArgs["result"]["application"]>
@@ -3922,9 +3932,10 @@ export namespace Prisma {
     userId?: boolean
     jobPostingId?: boolean
     createdAt?: boolean
+    cvPath?: boolean
   }
 
-  export type ApplicationOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "userId" | "jobPostingId" | "createdAt", ExtArgs["result"]["application"]>
+  export type ApplicationOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "userId" | "jobPostingId" | "createdAt" | "cvPath", ExtArgs["result"]["application"]>
   export type ApplicationInclude<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     user?: boolean | UserDefaultArgs<ExtArgs>
     jobPosting?: boolean | JobPostingDefaultArgs<ExtArgs>
@@ -3949,6 +3960,7 @@ export namespace Prisma {
       userId: number
       jobPostingId: number
       createdAt: Date
+      cvPath: string | null
     }, ExtArgs["result"]["application"]>
     composites: {}
   }
@@ -4378,6 +4390,7 @@ export namespace Prisma {
     readonly userId: FieldRef<"Application", 'Int'>
     readonly jobPostingId: FieldRef<"Application", 'Int'>
     readonly createdAt: FieldRef<"Application", 'DateTime'>
+    readonly cvPath: FieldRef<"Application", 'String'>
   }
     
 
@@ -7026,7 +7039,8 @@ export namespace Prisma {
     id: 'id',
     userId: 'userId',
     jobPostingId: 'jobPostingId',
-    createdAt: 'createdAt'
+    createdAt: 'createdAt',
+    cvPath: 'cvPath'
   };
 
   export type ApplicationScalarFieldEnum = (typeof ApplicationScalarFieldEnum)[keyof typeof ApplicationScalarFieldEnum]
@@ -7293,6 +7307,7 @@ export namespace Prisma {
     userId?: IntFilter<"Application"> | number
     jobPostingId?: IntFilter<"Application"> | number
     createdAt?: DateTimeFilter<"Application"> | Date | string
+    cvPath?: StringNullableFilter<"Application"> | string | null
     user?: XOR<UserScalarRelationFilter, UserWhereInput>
     jobPosting?: XOR<JobPostingScalarRelationFilter, JobPostingWhereInput>
   }
@@ -7302,6 +7317,7 @@ export namespace Prisma {
     userId?: SortOrder
     jobPostingId?: SortOrder
     createdAt?: SortOrder
+    cvPath?: SortOrderInput | SortOrder
     user?: UserOrderByWithRelationInput
     jobPosting?: JobPostingOrderByWithRelationInput
   }
@@ -7314,6 +7330,7 @@ export namespace Prisma {
     userId?: IntFilter<"Application"> | number
     jobPostingId?: IntFilter<"Application"> | number
     createdAt?: DateTimeFilter<"Application"> | Date | string
+    cvPath?: StringNullableFilter<"Application"> | string | null
     user?: XOR<UserScalarRelationFilter, UserWhereInput>
     jobPosting?: XOR<JobPostingScalarRelationFilter, JobPostingWhereInput>
   }, "id">
@@ -7323,6 +7340,7 @@ export namespace Prisma {
     userId?: SortOrder
     jobPostingId?: SortOrder
     createdAt?: SortOrder
+    cvPath?: SortOrderInput | SortOrder
     _count?: ApplicationCountOrderByAggregateInput
     _avg?: ApplicationAvgOrderByAggregateInput
     _max?: ApplicationMaxOrderByAggregateInput
@@ -7338,6 +7356,7 @@ export namespace Prisma {
     userId?: IntWithAggregatesFilter<"Application"> | number
     jobPostingId?: IntWithAggregatesFilter<"Application"> | number
     createdAt?: DateTimeWithAggregatesFilter<"Application"> | Date | string
+    cvPath?: StringNullableWithAggregatesFilter<"Application"> | string | null
   }
 
   export type SavedJobWhereInput = {
@@ -7604,6 +7623,7 @@ export namespace Prisma {
 
   export type ApplicationCreateInput = {
     createdAt?: Date | string
+    cvPath?: string | null
     user: UserCreateNestedOneWithoutApplicationsInput
     jobPosting: JobPostingCreateNestedOneWithoutApplicationsInput
   }
@@ -7613,10 +7633,12 @@ export namespace Prisma {
     userId: number
     jobPostingId: number
     createdAt?: Date | string
+    cvPath?: string | null
   }
 
   export type ApplicationUpdateInput = {
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    cvPath?: NullableStringFieldUpdateOperationsInput | string | null
     user?: UserUpdateOneRequiredWithoutApplicationsNestedInput
     jobPosting?: JobPostingUpdateOneRequiredWithoutApplicationsNestedInput
   }
@@ -7626,6 +7648,7 @@ export namespace Prisma {
     userId?: IntFieldUpdateOperationsInput | number
     jobPostingId?: IntFieldUpdateOperationsInput | number
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    cvPath?: NullableStringFieldUpdateOperationsInput | string | null
   }
 
   export type ApplicationCreateManyInput = {
@@ -7633,10 +7656,12 @@ export namespace Prisma {
     userId: number
     jobPostingId: number
     createdAt?: Date | string
+    cvPath?: string | null
   }
 
   export type ApplicationUpdateManyMutationInput = {
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    cvPath?: NullableStringFieldUpdateOperationsInput | string | null
   }
 
   export type ApplicationUncheckedUpdateManyInput = {
@@ -7644,6 +7669,7 @@ export namespace Prisma {
     userId?: IntFieldUpdateOperationsInput | number
     jobPostingId?: IntFieldUpdateOperationsInput | number
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    cvPath?: NullableStringFieldUpdateOperationsInput | string | null
   }
 
   export type SavedJobCreateInput = {
@@ -7990,6 +8016,7 @@ export namespace Prisma {
     userId?: SortOrder
     jobPostingId?: SortOrder
     createdAt?: SortOrder
+    cvPath?: SortOrder
   }
 
   export type ApplicationAvgOrderByAggregateInput = {
@@ -8003,6 +8030,7 @@ export namespace Prisma {
     userId?: SortOrder
     jobPostingId?: SortOrder
     createdAt?: SortOrder
+    cvPath?: SortOrder
   }
 
   export type ApplicationMinOrderByAggregateInput = {
@@ -8010,6 +8038,7 @@ export namespace Prisma {
     userId?: SortOrder
     jobPostingId?: SortOrder
     createdAt?: SortOrder
+    cvPath?: SortOrder
   }
 
   export type ApplicationSumOrderByAggregateInput = {
@@ -8600,6 +8629,7 @@ export namespace Prisma {
 
   export type ApplicationCreateWithoutUserInput = {
     createdAt?: Date | string
+    cvPath?: string | null
     jobPosting: JobPostingCreateNestedOneWithoutApplicationsInput
   }
 
@@ -8607,6 +8637,7 @@ export namespace Prisma {
     id?: number
     jobPostingId: number
     createdAt?: Date | string
+    cvPath?: string | null
   }
 
   export type ApplicationCreateOrConnectWithoutUserInput = {
@@ -8711,6 +8742,7 @@ export namespace Prisma {
     userId?: IntFilter<"Application"> | number
     jobPostingId?: IntFilter<"Application"> | number
     createdAt?: DateTimeFilter<"Application"> | Date | string
+    cvPath?: StringNullableFilter<"Application"> | string | null
   }
 
   export type SavedJobUpsertWithWhereUniqueWithoutUserInput = {
@@ -8793,6 +8825,7 @@ export namespace Prisma {
 
   export type ApplicationCreateWithoutJobPostingInput = {
     createdAt?: Date | string
+    cvPath?: string | null
     user: UserCreateNestedOneWithoutApplicationsInput
   }
 
@@ -8800,6 +8833,7 @@ export namespace Prisma {
     id?: number
     userId: number
     createdAt?: Date | string
+    cvPath?: string | null
   }
 
   export type ApplicationCreateOrConnectWithoutJobPostingInput = {
@@ -9214,6 +9248,7 @@ export namespace Prisma {
     id?: number
     jobPostingId: number
     createdAt?: Date | string
+    cvPath?: string | null
   }
 
   export type SavedJobCreateManyUserInput = {
@@ -9254,6 +9289,7 @@ export namespace Prisma {
 
   export type ApplicationUpdateWithoutUserInput = {
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    cvPath?: NullableStringFieldUpdateOperationsInput | string | null
     jobPosting?: JobPostingUpdateOneRequiredWithoutApplicationsNestedInput
   }
 
@@ -9261,12 +9297,14 @@ export namespace Prisma {
     id?: IntFieldUpdateOperationsInput | number
     jobPostingId?: IntFieldUpdateOperationsInput | number
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    cvPath?: NullableStringFieldUpdateOperationsInput | string | null
   }
 
   export type ApplicationUncheckedUpdateManyWithoutUserInput = {
     id?: IntFieldUpdateOperationsInput | number
     jobPostingId?: IntFieldUpdateOperationsInput | number
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    cvPath?: NullableStringFieldUpdateOperationsInput | string | null
   }
 
   export type SavedJobUpdateWithoutUserInput = {
@@ -9290,6 +9328,7 @@ export namespace Prisma {
     id?: number
     userId: number
     createdAt?: Date | string
+    cvPath?: string | null
   }
 
   export type SavedJobCreateManyJobPostingInput = {
@@ -9300,6 +9339,7 @@ export namespace Prisma {
 
   export type ApplicationUpdateWithoutJobPostingInput = {
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    cvPath?: NullableStringFieldUpdateOperationsInput | string | null
     user?: UserUpdateOneRequiredWithoutApplicationsNestedInput
   }
 
@@ -9307,12 +9347,14 @@ export namespace Prisma {
     id?: IntFieldUpdateOperationsInput | number
     userId?: IntFieldUpdateOperationsInput | number
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    cvPath?: NullableStringFieldUpdateOperationsInput | string | null
   }
 
   export type ApplicationUncheckedUpdateManyWithoutJobPostingInput = {
     id?: IntFieldUpdateOperationsInput | number
     userId?: IntFieldUpdateOperationsInput | number
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    cvPath?: NullableStringFieldUpdateOperationsInput | string | null
   }
 
   export type SavedJobUpdateWithoutJobPostingInput = {

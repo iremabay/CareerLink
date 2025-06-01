@@ -1,20 +1,46 @@
 const { PrismaClient } = require("../generated/prisma");
 const prisma = new PrismaClient();
 
+const multer = require("multer");
+const path = require("path");
+const fs = require("fs");
+
+const storage = multer.diskStorage({
+  destination: "uploads/",
+  filename: (req, file, cb) => {
+    cb(null, Date.now() + "-" + file.originalname);
+  }
+});
+const upload = multer({ storage });
+
+
 const createApplication = async (req, res) => {
-  const { jobPostingId, coverLetter } = req.body;
+
+console.log("🔥 DEBUG LOG:");
+console.log("req.headers.content-type:", req.headers["content-type"]);
+console.log("req.body:", req.body);
+console.log("req.file:", req.file);
+
+
   const user = req.user;
+  const cvFile = req.file;
+
+  // jobPostingId bazen string gelebilir
+  const jobPostingId = req.body?.jobPostingId;
+
+  if (!jobPostingId) {
+    return res.status(400).json({ message: "jobPostingId zorunludur." });
+  }
 
   if (user.role !== "USER") {
     return res.status(403).json({ message: "Sadece kullanıcılar başvuru yapabilir." });
   }
 
   try {
-    // Aynı ilana daha önce başvurmuş mu kontrolü
     const existing = await prisma.application.findFirst({
       where: {
         userId: user.userId,
-        jobPostingId
+        jobPostingId: parseInt(jobPostingId)
       }
     });
 
@@ -25,8 +51,8 @@ const createApplication = async (req, res) => {
     const application = await prisma.application.create({
       data: {
         userId: user.userId,
-        jobPostingId,
-        
+        jobPostingId: parseInt(jobPostingId),
+        cvPath: cvFile?.path || null
       }
     });
 
@@ -36,6 +62,8 @@ const createApplication = async (req, res) => {
     res.status(500).json({ message: "Sunucu hatası" });
   }
 };
+
+
 
 const deleteApplication = async (req, res) => {
   const { id } = req.params;
@@ -122,6 +150,8 @@ const getUserApplications = async (req, res) => {
     res.status(500).json({ message: "Sunucu hatası" });
   }
 };
+
+
 const getReceivedApplications = async (req, res) => {
   const user = req.user;
 
@@ -157,17 +187,28 @@ const getReceivedApplications = async (req, res) => {
       }
     });
 
-    res.json(applications);
+    const baseUrl = "http://localhost:3000";
+
+    // Başvuruya cvUrl ekleme
+    const updatedApplications = applications.map(app => ({
+      ...app,
+      cvUrl: app.cvPath ? `${baseUrl}/${app.cvPath}` : null
+    }));
+
+    res.json(updatedApplications);
   } catch (error) {
     console.error("İşveren başvuruları listelerken hata:", error);
     res.status(500).json({ message: "Sunucu hatası" });
   }
 };
 
+
+
 module.exports = {
   createApplication,
   getUserApplications,
   getReceivedApplications,
   deleteApplication,
-  updateApplication
+  updateApplication,
+  upload
 };

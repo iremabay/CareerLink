@@ -45,6 +45,8 @@ model Application {
 
   user          User       @relation(fields: [userId], references: [id])
   jobPosting    JobPosting @relation(fields: [jobPostingId], references: [id])
+  cvPath String?
+
 }
 
 model SavedJob {

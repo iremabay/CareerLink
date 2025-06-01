@@ -9,7 +9,8 @@ const PORT = process.env.PORT || 3000;
 
 // Middleware
 app.use(cors());
-app.use(bodyParser.json());
+app.use(express.json()); //JSON veriler için
+app.use(express.urlencoded({ extended: true })); //Form-data desteklesin
 
 // Routes
 const userRoutes = require("./routes/userRoutes");
@@ -20,6 +21,7 @@ app.use("/api/jobs", jobRoutes);
 
 const applicationRoutes = require("./routes/applicationRoutes");
 app.use("/api/applications", applicationRoutes);
+app.use("/uploads", express.static("uploads"));
 
 const savedJobRoutes = require("./routes/savedJobRoutes");
 app.use("/api/saved-jobs", savedJobRoutes);
@@ -29,6 +31,7 @@ app.use("/api", recommendationRoutes);
 
 const cvRoutes = require("./routes/cvRoutes");
 app.use("/api/cv", cvRoutes);
+
 
 
 
