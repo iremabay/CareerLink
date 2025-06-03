@@ -1,4 +1,4 @@
-from fastapi import FastAPI, HTTPException, UploadFile, File
+from fastapi import FastAPI, HTTPException, UploadFile, File, Query
 from pydantic import BaseModel
 import pandas as pd
 import psycopg2
@@ -12,6 +12,9 @@ import jpype
 import os
 from io import BytesIO
 from PyPDF2 import PdfReader
+import requests
+from datetime import datetime
+
 
 app = FastAPI()
 
@@ -96,12 +99,13 @@ def preprocess_cv(request: CVRequest):
         raise HTTPException(status_code=500, detail="Önişleme yapılamadı.")
 
 @app.post("/upload")
-async def upload_cv(file: UploadFile = File(...)):
+async def upload_cv(file: UploadFile = File(...), user_id: int = Query(...)):
     global latest_cv_processed
 
     try:
         content = await file.read()
 
+        # PDF veya TXT dosyası okuma
         if file.filename.endswith(".pdf"):
             reader = PdfReader(BytesIO(content))
             text = " ".join([page.extract_text() or "" for page in reader.pages])
@@ -110,15 +114,37 @@ async def upload_cv(file: UploadFile = File(...)):
         else:
             raise HTTPException(status_code=400, detail="Sadece .pdf veya .txt dosyaları kabul edilir.")
 
+        # Önişleme
         processed = preprocess_text(text)
         latest_cv_processed = processed
-        return {"message": "CV başarıyla yüklendi ve işlendi."}
+
+        # CV metnini dosya olarak kaydetme
+        filename = f"cv_{user_id}_{int(datetime.now().timestamp())}.txt"
+        save_dir = "stored_cvs"
+        os.makedirs(save_dir, exist_ok=True)
+        save_path = os.path.join(save_dir, filename)
+
+        with open(save_path, "w", encoding="utf-8") as f:
+            f.write(text)
+
+        # Node backende istek at ilgili kullanıcının CV yolunu güncelle
+        response = requests.put(
+            f"http://localhost:3000/api/users/{user_id}/cv",
+            json={"cvPath": save_path}
+        )
+
+        if response.status_code != 200:
+            print("CV path güncellenemedi:", response.text)
+
+        # cv path dön
+        return {
+            "message": "CV başarıyla yüklendi, işlendi ve kaydedildi.",
+            "cvPath": save_path
+        }
 
     except Exception as e:
         print("Upload/Önişleme hatası:", e)
         raise HTTPException(status_code=500, detail="CV yükleme/işleme başarısız.")
-    
-    
 
 @app.get("/recommend")
 def recommend_jobs():

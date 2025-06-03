@@ -25,7 +25,7 @@ const createJob = async (req, res) => {
         description,
         companyName,
         employerId: user.userId,
-        processed_text: processedText // 👈 Buraya kaydediyoruz
+        processed_text: processedText 
       }
     });
 

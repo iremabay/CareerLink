@@ -1,6 +1,6 @@
 const express = require("express");
 const router = express.Router();
-const { registerUser, loginUser, getUserProfile } = require("../controllers/userController");
+const { registerUser, loginUser, getUserProfile,updateCvPath } = require("../controllers/userController");
 const verifyToken = require("../middleware/authMiddleware"); //JWT kontrolü
 
 // Kayıt (register)
@@ -11,6 +11,9 @@ router.post("/login", loginUser);
 // Kullanıcı bilgileri getirme
 router.get("/profile", verifyToken, getUserProfile);
 
+router.put("/:userId/cv", updateCvPath);
+
+
 // Giriş yapmış kullanıcı için test route (korumalı)
 router.get("/me", verifyToken, (req, res) => {
   res.json({
@@ -19,5 +22,6 @@ router.get("/me", verifyToken, (req, res) => {
     role: req.user.role,
   });
 });
+
 
 module.exports = router;

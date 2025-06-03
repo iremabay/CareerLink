@@ -9,12 +9,12 @@ const registerUser = async (req, res) => {
   const { fullName, email, password, role } = req.body;
 
   try {
-    console.log("🟡 Register isteği geldi:", req.body);
+    console.log("Register isteği geldi:", req.body);
 
     const existingUser = await prisma.user.findUnique({ where: { email } });
 
     if (existingUser) {
-      console.log("🔴 Bu e-posta zaten kayıtlı:", email);
+      console.log("Bu e-posta zaten kayıtlı:", email);
       return res.status(400).json({ message: "Bu e-posta zaten kayıtlı." });
     }
 
@@ -29,10 +29,10 @@ const registerUser = async (req, res) => {
       },
     });
 
-    console.log("🟢 Yeni kullanıcı oluşturuldu:", newUser.email);
+    console.log("Yeni kullanıcı oluşturuldu:", newUser.email);
     res.status(201).json(newUser);
   } catch (error) {
-    console.error("🔥 Kayıt hatası:", error);
+    console.error("Kayıt hatası:", error);
     res.status(500).json({ message: "Sunucu hatası" });
   }
 };
@@ -101,5 +101,23 @@ const getUserProfile = async (req, res) => {
   }
 };
 
+const updateCvPath = async (req, res) => {
+  const { userId } = req.params;
+  const { cvPath } = req.body;
 
-module.exports = { registerUser, loginUser, getUserProfile };
+  try {
+    const updated = await prisma.user.update({
+      where: { id: Number(userId) },
+      data: { lastCvPath: cvPath }
+    });
+
+    res.json({ message: "CV yolu güncellendi", updated });
+  } catch (error) {
+    console.error("CV yolu güncelleme hatası:", error);
+    res.status(500).json({ message: "Sunucu hatası" });
+  }
+};
+
+
+
+module.exports = { registerUser, loginUser, getUserProfile, updateCvPath };

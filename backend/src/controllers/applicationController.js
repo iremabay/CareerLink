@@ -15,18 +15,10 @@ const upload = multer({ storage });
 
 
 const createApplication = async (req, res) => {
-
-console.log("🔥 DEBUG LOG:");
-console.log("req.headers.content-type:", req.headers["content-type"]);
-console.log("req.body:", req.body);
-console.log("req.file:", req.file);
-
-
   const user = req.user;
-  const cvFile = req.file;
-
-  // jobPostingId bazen string gelebilir
   const jobPostingId = req.body?.jobPostingId;
+
+  console.log("BAŞVURU İSTEK:", { userId: user?.userId, jobPostingId });
 
   if (!jobPostingId) {
     return res.status(400).json({ message: "jobPostingId zorunludur." });
@@ -37,6 +29,7 @@ console.log("req.file:", req.file);
   }
 
   try {
+    // Daha önce bu ilana başvurmuş mu kontrol et
     const existing = await prisma.application.findFirst({
       where: {
         userId: user.userId,
@@ -48,11 +41,23 @@ console.log("req.file:", req.file);
       return res.status(400).json({ message: "Bu ilana zaten başvurdunuz." });
     }
 
+    // Kullanıcının veritabanındaki son yüklediği CV yolunu çek
+    const currentUser = await prisma.user.findUnique({
+      where: { id: user.userId }
+    });
+
+    const cvPath = currentUser?.lastCvPath || null;
+
+    if (!cvPath) {
+      return res.status(400).json({ message: "CV bulunamadı. Lütfen önce CV yükleyin." });
+    }
+
+    // Başvuru oluştur
     const application = await prisma.application.create({
       data: {
         userId: user.userId,
         jobPostingId: parseInt(jobPostingId),
-        cvPath: cvFile?.path || null
+        cvPath: cvPath
       }
     });
 
@@ -62,6 +67,7 @@ console.log("req.file:", req.file);
     res.status(500).json({ message: "Sunucu hatası" });
   }
 };
+
 
 
 
@@ -201,7 +207,6 @@ const getReceivedApplications = async (req, res) => {
     res.status(500).json({ message: "Sunucu hatası" });
   }
 };
-
 
 
 module.exports = {

@@ -26,4 +26,6 @@ router.delete("/:id", authenticate, deleteApplication);
 // Başvuru güncelleme
 router.put("/:id", authenticate, updateApplication);
 
+router.post("/", authenticate, upload.single("cv"), createApplication);
+
 module.exports = router;

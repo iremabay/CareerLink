@@ -126,7 +126,8 @@ exports.Prisma.UserScalarFieldEnum = {
   email: 'email',
   password: 'password',
   role: 'role',
-  createdAt: 'createdAt'
+  createdAt: 'createdAt',
+  lastCvPath: 'lastCvPath'
 };
 
 exports.Prisma.JobPostingScalarFieldEnum = {

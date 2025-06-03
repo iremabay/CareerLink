@@ -1348,6 +1348,7 @@ export namespace Prisma {
     password: string | null
     role: string | null
     createdAt: Date | null
+    lastCvPath: string | null
   }
 
   export type UserMaxAggregateOutputType = {
@@ -1357,6 +1358,7 @@ export namespace Prisma {
     password: string | null
     role: string | null
     createdAt: Date | null
+    lastCvPath: string | null
   }
 
   export type UserCountAggregateOutputType = {
@@ -1366,6 +1368,7 @@ export namespace Prisma {
     password: number
     role: number
     createdAt: number
+    lastCvPath: number
     _all: number
   }
 
@@ -1385,6 +1388,7 @@ export namespace Prisma {
     password?: true
     role?: true
     createdAt?: true
+    lastCvPath?: true
   }
 
   export type UserMaxAggregateInputType = {
@@ -1394,6 +1398,7 @@ export namespace Prisma {
     password?: true
     role?: true
     createdAt?: true
+    lastCvPath?: true
   }
 
   export type UserCountAggregateInputType = {
@@ -1403,6 +1408,7 @@ export namespace Prisma {
     password?: true
     role?: true
     createdAt?: true
+    lastCvPath?: true
     _all?: true
   }
 
@@ -1499,6 +1505,7 @@ export namespace Prisma {
     password: string
     role: string
     createdAt: Date
+    lastCvPath: string | null
     _count: UserCountAggregateOutputType | null
     _avg: UserAvgAggregateOutputType | null
     _sum: UserSumAggregateOutputType | null
@@ -1527,6 +1534,7 @@ export namespace Prisma {
     password?: boolean
     role?: boolean
     createdAt?: boolean
+    lastCvPath?: boolean
     jobPostings?: boolean | User$jobPostingsArgs<ExtArgs>
     applications?: boolean | User$applicationsArgs<ExtArgs>
     savedJobs?: boolean | User$savedJobsArgs<ExtArgs>
@@ -1541,6 +1549,7 @@ export namespace Prisma {
     password?: boolean
     role?: boolean
     createdAt?: boolean
+    lastCvPath?: boolean
   }, ExtArgs["result"]["user"]>
 
   export type UserSelectUpdateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
@@ -1550,6 +1559,7 @@ export namespace Prisma {
     password?: boolean
     role?: boolean
     createdAt?: boolean
+    lastCvPath?: boolean
   }, ExtArgs["result"]["user"]>
 
   export type UserSelectScalar = {
@@ -1559,9 +1569,10 @@ export namespace Prisma {
     password?: boolean
     role?: boolean
     createdAt?: boolean
+    lastCvPath?: boolean
   }
 
-  export type UserOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "fullName" | "email" | "password" | "role" | "createdAt", ExtArgs["result"]["user"]>
+  export type UserOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "fullName" | "email" | "password" | "role" | "createdAt" | "lastCvPath", ExtArgs["result"]["user"]>
   export type UserInclude<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     jobPostings?: boolean | User$jobPostingsArgs<ExtArgs>
     applications?: boolean | User$applicationsArgs<ExtArgs>
@@ -1587,6 +1598,7 @@ export namespace Prisma {
       password: string
       role: string
       createdAt: Date
+      lastCvPath: string | null
     }, ExtArgs["result"]["user"]>
     composites: {}
   }
@@ -2020,6 +2032,7 @@ export namespace Prisma {
     readonly password: FieldRef<"User", 'String'>
     readonly role: FieldRef<"User", 'String'>
     readonly createdAt: FieldRef<"User", 'DateTime'>
+    readonly lastCvPath: FieldRef<"User", 'String'>
   }
     
 
@@ -7016,7 +7029,8 @@ export namespace Prisma {
     email: 'email',
     password: 'password',
     role: 'role',
-    createdAt: 'createdAt'
+    createdAt: 'createdAt',
+    lastCvPath: 'lastCvPath'
   };
 
   export type UserScalarFieldEnum = (typeof UserScalarFieldEnum)[keyof typeof UserScalarFieldEnum]
@@ -7165,6 +7179,7 @@ export namespace Prisma {
     password?: StringFilter<"User"> | string
     role?: StringFilter<"User"> | string
     createdAt?: DateTimeFilter<"User"> | Date | string
+    lastCvPath?: StringNullableFilter<"User"> | string | null
     jobPostings?: JobPostingListRelationFilter
     applications?: ApplicationListRelationFilter
     savedJobs?: SavedJobListRelationFilter
@@ -7178,6 +7193,7 @@ export namespace Prisma {
     password?: SortOrder
     role?: SortOrder
     createdAt?: SortOrder
+    lastCvPath?: SortOrderInput | SortOrder
     jobPostings?: JobPostingOrderByRelationAggregateInput
     applications?: ApplicationOrderByRelationAggregateInput
     savedJobs?: SavedJobOrderByRelationAggregateInput
@@ -7194,6 +7210,7 @@ export namespace Prisma {
     password?: StringFilter<"User"> | string
     role?: StringFilter<"User"> | string
     createdAt?: DateTimeFilter<"User"> | Date | string
+    lastCvPath?: StringNullableFilter<"User"> | string | null
     jobPostings?: JobPostingListRelationFilter
     applications?: ApplicationListRelationFilter
     savedJobs?: SavedJobListRelationFilter
@@ -7207,6 +7224,7 @@ export namespace Prisma {
     password?: SortOrder
     role?: SortOrder
     createdAt?: SortOrder
+    lastCvPath?: SortOrderInput | SortOrder
     _count?: UserCountOrderByAggregateInput
     _avg?: UserAvgOrderByAggregateInput
     _max?: UserMaxOrderByAggregateInput
@@ -7224,6 +7242,7 @@ export namespace Prisma {
     password?: StringWithAggregatesFilter<"User"> | string
     role?: StringWithAggregatesFilter<"User"> | string
     createdAt?: DateTimeWithAggregatesFilter<"User"> | Date | string
+    lastCvPath?: StringNullableWithAggregatesFilter<"User"> | string | null
   }
 
   export type JobPostingWhereInput = {
@@ -7477,6 +7496,7 @@ export namespace Prisma {
     password: string
     role: string
     createdAt?: Date | string
+    lastCvPath?: string | null
     jobPostings?: JobPostingCreateNestedManyWithoutEmployerInput
     applications?: ApplicationCreateNestedManyWithoutUserInput
     savedJobs?: SavedJobCreateNestedManyWithoutUserInput
@@ -7490,6 +7510,7 @@ export namespace Prisma {
     password: string
     role: string
     createdAt?: Date | string
+    lastCvPath?: string | null
     jobPostings?: JobPostingUncheckedCreateNestedManyWithoutEmployerInput
     applications?: ApplicationUncheckedCreateNestedManyWithoutUserInput
     savedJobs?: SavedJobUncheckedCreateNestedManyWithoutUserInput
@@ -7502,6 +7523,7 @@ export namespace Prisma {
     password?: StringFieldUpdateOperationsInput | string
     role?: StringFieldUpdateOperationsInput | string
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    lastCvPath?: NullableStringFieldUpdateOperationsInput | string | null
     jobPostings?: JobPostingUpdateManyWithoutEmployerNestedInput
     applications?: ApplicationUpdateManyWithoutUserNestedInput
     savedJobs?: SavedJobUpdateManyWithoutUserNestedInput
@@ -7515,6 +7537,7 @@ export namespace Prisma {
     password?: StringFieldUpdateOperationsInput | string
     role?: StringFieldUpdateOperationsInput | string
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    lastCvPath?: NullableStringFieldUpdateOperationsInput | string | null
     jobPostings?: JobPostingUncheckedUpdateManyWithoutEmployerNestedInput
     applications?: ApplicationUncheckedUpdateManyWithoutUserNestedInput
     savedJobs?: SavedJobUncheckedUpdateManyWithoutUserNestedInput
@@ -7528,6 +7551,7 @@ export namespace Prisma {
     password: string
     role: string
     createdAt?: Date | string
+    lastCvPath?: string | null
   }
 
   export type UserUpdateManyMutationInput = {
@@ -7536,6 +7560,7 @@ export namespace Prisma {
     password?: StringFieldUpdateOperationsInput | string
     role?: StringFieldUpdateOperationsInput | string
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    lastCvPath?: NullableStringFieldUpdateOperationsInput | string | null
   }
 
   export type UserUncheckedUpdateManyInput = {
@@ -7545,6 +7570,7 @@ export namespace Prisma {
     password?: StringFieldUpdateOperationsInput | string
     role?: StringFieldUpdateOperationsInput | string
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    lastCvPath?: NullableStringFieldUpdateOperationsInput | string | null
   }
 
   export type JobPostingCreateInput = {
@@ -7805,6 +7831,21 @@ export namespace Prisma {
     not?: NestedDateTimeFilter<$PrismaModel> | Date | string
   }
 
+  export type StringNullableFilter<$PrismaModel = never> = {
+    equals?: string | StringFieldRefInput<$PrismaModel> | null
+    in?: string[] | ListStringFieldRefInput<$PrismaModel> | null
+    notIn?: string[] | ListStringFieldRefInput<$PrismaModel> | null
+    lt?: string | StringFieldRefInput<$PrismaModel>
+    lte?: string | StringFieldRefInput<$PrismaModel>
+    gt?: string | StringFieldRefInput<$PrismaModel>
+    gte?: string | StringFieldRefInput<$PrismaModel>
+    contains?: string | StringFieldRefInput<$PrismaModel>
+    startsWith?: string | StringFieldRefInput<$PrismaModel>
+    endsWith?: string | StringFieldRefInput<$PrismaModel>
+    mode?: QueryMode
+    not?: NestedStringNullableFilter<$PrismaModel> | string | null
+  }
+
   export type JobPostingListRelationFilter = {
     every?: JobPostingWhereInput
     some?: JobPostingWhereInput
@@ -7828,6 +7869,11 @@ export namespace Prisma {
     isNot?: CVWhereInput | null
   }
 
+  export type SortOrderInput = {
+    sort: SortOrder
+    nulls?: NullsOrder
+  }
+
   export type JobPostingOrderByRelationAggregateInput = {
     _count?: SortOrder
   }
@@ -7847,6 +7893,7 @@ export namespace Prisma {
     password?: SortOrder
     role?: SortOrder
     createdAt?: SortOrder
+    lastCvPath?: SortOrder
   }
 
   export type UserAvgOrderByAggregateInput = {
@@ -7860,6 +7907,7 @@ export namespace Prisma {
     password?: SortOrder
     role?: SortOrder
     createdAt?: SortOrder
+    lastCvPath?: SortOrder
   }
 
   export type UserMinOrderByAggregateInput = {
@@ -7869,6 +7917,7 @@ export namespace Prisma {
     password?: SortOrder
     role?: SortOrder
     createdAt?: SortOrder
+    lastCvPath?: SortOrder
   }
 
   export type UserSumOrderByAggregateInput = {
@@ -7923,7 +7972,7 @@ export namespace Prisma {
     _max?: NestedDateTimeFilter<$PrismaModel>
   }
 
-  export type StringNullableFilter<$PrismaModel = never> = {
+  export type StringNullableWithAggregatesFilter<$PrismaModel = never> = {
     equals?: string | StringFieldRefInput<$PrismaModel> | null
     in?: string[] | ListStringFieldRefInput<$PrismaModel> | null
     notIn?: string[] | ListStringFieldRefInput<$PrismaModel> | null
@@ -7935,17 +7984,15 @@ export namespace Prisma {
     startsWith?: string | StringFieldRefInput<$PrismaModel>
     endsWith?: string | StringFieldRefInput<$PrismaModel>
     mode?: QueryMode
-    not?: NestedStringNullableFilter<$PrismaModel> | string | null
+    not?: NestedStringNullableWithAggregatesFilter<$PrismaModel> | string | null
+    _count?: NestedIntNullableFilter<$PrismaModel>
+    _min?: NestedStringNullableFilter<$PrismaModel>
+    _max?: NestedStringNullableFilter<$PrismaModel>
   }
 
   export type UserScalarRelationFilter = {
     is?: UserWhereInput
     isNot?: UserWhereInput
-  }
-
-  export type SortOrderInput = {
-    sort: SortOrder
-    nulls?: NullsOrder
   }
 
   export type JobPostingCountOrderByAggregateInput = {
@@ -7986,24 +8033,6 @@ export namespace Prisma {
   export type JobPostingSumOrderByAggregateInput = {
     id?: SortOrder
     employerId?: SortOrder
-  }
-
-  export type StringNullableWithAggregatesFilter<$PrismaModel = never> = {
-    equals?: string | StringFieldRefInput<$PrismaModel> | null
-    in?: string[] | ListStringFieldRefInput<$PrismaModel> | null
-    notIn?: string[] | ListStringFieldRefInput<$PrismaModel> | null
-    lt?: string | StringFieldRefInput<$PrismaModel>
-    lte?: string | StringFieldRefInput<$PrismaModel>
-    gt?: string | StringFieldRefInput<$PrismaModel>
-    gte?: string | StringFieldRefInput<$PrismaModel>
-    contains?: string | StringFieldRefInput<$PrismaModel>
-    startsWith?: string | StringFieldRefInput<$PrismaModel>
-    endsWith?: string | StringFieldRefInput<$PrismaModel>
-    mode?: QueryMode
-    not?: NestedStringNullableWithAggregatesFilter<$PrismaModel> | string | null
-    _count?: NestedIntNullableFilter<$PrismaModel>
-    _min?: NestedStringNullableFilter<$PrismaModel>
-    _max?: NestedStringNullableFilter<$PrismaModel>
   }
 
   export type JobPostingScalarRelationFilter = {
@@ -8176,6 +8205,10 @@ export namespace Prisma {
     set?: Date | string
   }
 
+  export type NullableStringFieldUpdateOperationsInput = {
+    set?: string | null
+  }
+
   export type JobPostingUpdateManyWithoutEmployerNestedInput = {
     create?: XOR<JobPostingCreateWithoutEmployerInput, JobPostingUncheckedCreateWithoutEmployerInput> | JobPostingCreateWithoutEmployerInput[] | JobPostingUncheckedCreateWithoutEmployerInput[]
     connectOrCreate?: JobPostingCreateOrConnectWithoutEmployerInput | JobPostingCreateOrConnectWithoutEmployerInput[]
@@ -8320,10 +8353,6 @@ export namespace Prisma {
     connectOrCreate?: SavedJobCreateOrConnectWithoutJobPostingInput | SavedJobCreateOrConnectWithoutJobPostingInput[]
     createMany?: SavedJobCreateManyJobPostingInputEnvelope
     connect?: SavedJobWhereUniqueInput | SavedJobWhereUniqueInput[]
-  }
-
-  export type NullableStringFieldUpdateOperationsInput = {
-    set?: string | null
   }
 
   export type UserUpdateOneRequiredWithoutJobPostingsNestedInput = {
@@ -8496,6 +8525,20 @@ export namespace Prisma {
     not?: NestedDateTimeFilter<$PrismaModel> | Date | string
   }
 
+  export type NestedStringNullableFilter<$PrismaModel = never> = {
+    equals?: string | StringFieldRefInput<$PrismaModel> | null
+    in?: string[] | ListStringFieldRefInput<$PrismaModel> | null
+    notIn?: string[] | ListStringFieldRefInput<$PrismaModel> | null
+    lt?: string | StringFieldRefInput<$PrismaModel>
+    lte?: string | StringFieldRefInput<$PrismaModel>
+    gt?: string | StringFieldRefInput<$PrismaModel>
+    gte?: string | StringFieldRefInput<$PrismaModel>
+    contains?: string | StringFieldRefInput<$PrismaModel>
+    startsWith?: string | StringFieldRefInput<$PrismaModel>
+    endsWith?: string | StringFieldRefInput<$PrismaModel>
+    not?: NestedStringNullableFilter<$PrismaModel> | string | null
+  }
+
   export type NestedIntWithAggregatesFilter<$PrismaModel = never> = {
     equals?: number | IntFieldRefInput<$PrismaModel>
     in?: number[] | ListIntFieldRefInput<$PrismaModel>
@@ -8552,20 +8595,6 @@ export namespace Prisma {
     _count?: NestedIntFilter<$PrismaModel>
     _min?: NestedDateTimeFilter<$PrismaModel>
     _max?: NestedDateTimeFilter<$PrismaModel>
-  }
-
-  export type NestedStringNullableFilter<$PrismaModel = never> = {
-    equals?: string | StringFieldRefInput<$PrismaModel> | null
-    in?: string[] | ListStringFieldRefInput<$PrismaModel> | null
-    notIn?: string[] | ListStringFieldRefInput<$PrismaModel> | null
-    lt?: string | StringFieldRefInput<$PrismaModel>
-    lte?: string | StringFieldRefInput<$PrismaModel>
-    gt?: string | StringFieldRefInput<$PrismaModel>
-    gte?: string | StringFieldRefInput<$PrismaModel>
-    contains?: string | StringFieldRefInput<$PrismaModel>
-    startsWith?: string | StringFieldRefInput<$PrismaModel>
-    endsWith?: string | StringFieldRefInput<$PrismaModel>
-    not?: NestedStringNullableFilter<$PrismaModel> | string | null
   }
 
   export type NestedStringNullableWithAggregatesFilter<$PrismaModel = never> = {
@@ -8801,6 +8830,7 @@ export namespace Prisma {
     password: string
     role: string
     createdAt?: Date | string
+    lastCvPath?: string | null
     applications?: ApplicationCreateNestedManyWithoutUserInput
     savedJobs?: SavedJobCreateNestedManyWithoutUserInput
     cv?: CVCreateNestedOneWithoutUserInput
@@ -8813,6 +8843,7 @@ export namespace Prisma {
     password: string
     role: string
     createdAt?: Date | string
+    lastCvPath?: string | null
     applications?: ApplicationUncheckedCreateNestedManyWithoutUserInput
     savedJobs?: SavedJobUncheckedCreateNestedManyWithoutUserInput
     cv?: CVUncheckedCreateNestedOneWithoutUserInput
@@ -8884,6 +8915,7 @@ export namespace Prisma {
     password?: StringFieldUpdateOperationsInput | string
     role?: StringFieldUpdateOperationsInput | string
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    lastCvPath?: NullableStringFieldUpdateOperationsInput | string | null
     applications?: ApplicationUpdateManyWithoutUserNestedInput
     savedJobs?: SavedJobUpdateManyWithoutUserNestedInput
     cv?: CVUpdateOneWithoutUserNestedInput
@@ -8896,6 +8928,7 @@ export namespace Prisma {
     password?: StringFieldUpdateOperationsInput | string
     role?: StringFieldUpdateOperationsInput | string
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    lastCvPath?: NullableStringFieldUpdateOperationsInput | string | null
     applications?: ApplicationUncheckedUpdateManyWithoutUserNestedInput
     savedJobs?: SavedJobUncheckedUpdateManyWithoutUserNestedInput
     cv?: CVUncheckedUpdateOneWithoutUserNestedInput
@@ -8939,6 +8972,7 @@ export namespace Prisma {
     password: string
     role: string
     createdAt?: Date | string
+    lastCvPath?: string | null
     jobPostings?: JobPostingCreateNestedManyWithoutEmployerInput
     savedJobs?: SavedJobCreateNestedManyWithoutUserInput
     cv?: CVCreateNestedOneWithoutUserInput
@@ -8951,6 +8985,7 @@ export namespace Prisma {
     password: string
     role: string
     createdAt?: Date | string
+    lastCvPath?: string | null
     jobPostings?: JobPostingUncheckedCreateNestedManyWithoutEmployerInput
     savedJobs?: SavedJobUncheckedCreateNestedManyWithoutUserInput
     cv?: CVUncheckedCreateNestedOneWithoutUserInput
@@ -9004,6 +9039,7 @@ export namespace Prisma {
     password?: StringFieldUpdateOperationsInput | string
     role?: StringFieldUpdateOperationsInput | string
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    lastCvPath?: NullableStringFieldUpdateOperationsInput | string | null
     jobPostings?: JobPostingUpdateManyWithoutEmployerNestedInput
     savedJobs?: SavedJobUpdateManyWithoutUserNestedInput
     cv?: CVUpdateOneWithoutUserNestedInput
@@ -9016,6 +9052,7 @@ export namespace Prisma {
     password?: StringFieldUpdateOperationsInput | string
     role?: StringFieldUpdateOperationsInput | string
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    lastCvPath?: NullableStringFieldUpdateOperationsInput | string | null
     jobPostings?: JobPostingUncheckedUpdateManyWithoutEmployerNestedInput
     savedJobs?: SavedJobUncheckedUpdateManyWithoutUserNestedInput
     cv?: CVUncheckedUpdateOneWithoutUserNestedInput
@@ -9059,6 +9096,7 @@ export namespace Prisma {
     password: string
     role: string
     createdAt?: Date | string
+    lastCvPath?: string | null
     jobPostings?: JobPostingCreateNestedManyWithoutEmployerInput
     applications?: ApplicationCreateNestedManyWithoutUserInput
     cv?: CVCreateNestedOneWithoutUserInput
@@ -9071,6 +9109,7 @@ export namespace Prisma {
     password: string
     role: string
     createdAt?: Date | string
+    lastCvPath?: string | null
     jobPostings?: JobPostingUncheckedCreateNestedManyWithoutEmployerInput
     applications?: ApplicationUncheckedCreateNestedManyWithoutUserInput
     cv?: CVUncheckedCreateNestedOneWithoutUserInput
@@ -9124,6 +9163,7 @@ export namespace Prisma {
     password?: StringFieldUpdateOperationsInput | string
     role?: StringFieldUpdateOperationsInput | string
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    lastCvPath?: NullableStringFieldUpdateOperationsInput | string | null
     jobPostings?: JobPostingUpdateManyWithoutEmployerNestedInput
     applications?: ApplicationUpdateManyWithoutUserNestedInput
     cv?: CVUpdateOneWithoutUserNestedInput
@@ -9136,6 +9176,7 @@ export namespace Prisma {
     password?: StringFieldUpdateOperationsInput | string
     role?: StringFieldUpdateOperationsInput | string
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    lastCvPath?: NullableStringFieldUpdateOperationsInput | string | null
     jobPostings?: JobPostingUncheckedUpdateManyWithoutEmployerNestedInput
     applications?: ApplicationUncheckedUpdateManyWithoutUserNestedInput
     cv?: CVUncheckedUpdateOneWithoutUserNestedInput
@@ -9179,6 +9220,7 @@ export namespace Prisma {
     password: string
     role: string
     createdAt?: Date | string
+    lastCvPath?: string | null
     jobPostings?: JobPostingCreateNestedManyWithoutEmployerInput
     applications?: ApplicationCreateNestedManyWithoutUserInput
     savedJobs?: SavedJobCreateNestedManyWithoutUserInput
@@ -9191,6 +9233,7 @@ export namespace Prisma {
     password: string
     role: string
     createdAt?: Date | string
+    lastCvPath?: string | null
     jobPostings?: JobPostingUncheckedCreateNestedManyWithoutEmployerInput
     applications?: ApplicationUncheckedCreateNestedManyWithoutUserInput
     savedJobs?: SavedJobUncheckedCreateNestedManyWithoutUserInput
@@ -9218,6 +9261,7 @@ export namespace Prisma {
     password?: StringFieldUpdateOperationsInput | string
     role?: StringFieldUpdateOperationsInput | string
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    lastCvPath?: NullableStringFieldUpdateOperationsInput | string | null
     jobPostings?: JobPostingUpdateManyWithoutEmployerNestedInput
     applications?: ApplicationUpdateManyWithoutUserNestedInput
     savedJobs?: SavedJobUpdateManyWithoutUserNestedInput
@@ -9230,6 +9274,7 @@ export namespace Prisma {
     password?: StringFieldUpdateOperationsInput | string
     role?: StringFieldUpdateOperationsInput | string
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    lastCvPath?: NullableStringFieldUpdateOperationsInput | string | null
     jobPostings?: JobPostingUncheckedUpdateManyWithoutEmployerNestedInput
     applications?: ApplicationUncheckedUpdateManyWithoutUserNestedInput
     savedJobs?: SavedJobUncheckedUpdateManyWithoutUserNestedInput
