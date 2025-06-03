@@ -135,12 +135,33 @@ const getMyJobs = async (req, res) => {
   }
 };
 
+const getJobById = async (req, res) => {
+  const { id } = req.params;
+
+  try {
+    const job = await prisma.jobPosting.findUnique({
+      where: { id: parseInt(id) },
+    });
+
+    if (!job) {
+      return res.status(404).json({ message: "İş ilanı bulunamadı." });
+    }
+
+    res.json(job);
+  } catch (error) {
+    console.error("İş ilanı detay hatası:", error);
+    res.status(500).json({ message: "Sunucu hatası" });
+  }
+};
+
+
 
 module.exports = {
   createJob,
   getAllJobs,
   updateJob,
   deleteJob,
-  getMyJobs
+  getMyJobs,
+  getJobById
 };
 
